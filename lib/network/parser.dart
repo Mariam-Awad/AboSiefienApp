@@ -1,12 +1,10 @@
-
-
+import 'package:abosiefienapp/model/user_model.dart';
 
 class Parser {
   static parse<T>(dynamic json) {
     switch (T) {
-      // case CreateResponse:
-      //   return CreateResponse.fromJson(json);
-
+      case UserModel:
+        return UserModel.fromJson(json);
     }
   }
 }

@@ -1,10 +1,15 @@
+import 'package:abosiefienapp/cache/app_cache.dart';
 import 'package:abosiefienapp/presentation/screens/auth/login_provider.dart';
 import 'package:abosiefienapp/presentation/screens/auth/login_screen.dart';
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  AppCache.instance.init().then((value) {
+    runApp(MyApp());
+  });
 }
 
 class MyApp extends StatelessWidget {
@@ -16,6 +21,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => LoginProvider()),
       ],
       child: MaterialApp(
+        builder: BotToastInit(),
+        navigatorObservers: [BotToastNavigatorObserver()],
         debugShowCheckedModeBanner: false,
         title: "App Siefien App",
         theme: ThemeData(

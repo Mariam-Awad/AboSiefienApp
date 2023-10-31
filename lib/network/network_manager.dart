@@ -1,10 +1,9 @@
 import 'dart:convert';
 import 'package:abosiefienapp/cache/app_cache.dart';
 import 'package:abosiefienapp/network/parser.dart';
+import 'package:abosiefienapp/utils/app_debug_prints.dart';
 import 'package:alice/alice.dart';
 import 'package:dio/dio.dart';
-
-
 
 class NetworkManager {
   static Alice? alice = Alice(
@@ -23,7 +22,7 @@ class NetworkManager {
   };
 
   NetworkManager({this.cancelToken}) {
-    dio =  Dio();
+    dio = Dio();
     dio.options = BaseOptions(headers: headers);
     dio.interceptors.add(LogInterceptor(
       requestBody: true,
@@ -36,9 +35,10 @@ class NetworkManager {
   }
 
   void _updateHeaders() {
-    print("hereeeeee");
+    printError(AppCache.instance.getApiToken().toString());
     if (AppCache.instance.getApiToken() != null) {
-      String? token = AppCache.instance.getApiToken()!;
+      String? token = AppCache.instance.getApiToken();
+      printDone('token is: $token');
       if (token != null) {
         headers['Authorization'] = "Bearer $token";
       }
@@ -88,7 +88,7 @@ class NetworkManager {
         cancelToken: cancelToken,
         options: Options(headers: headers),
         data: formData);
-    print('response.statusCode ${response.statusCode}');
+    printDone('response.statusCode ${response.statusCode}');
     return parseResponse<T>(response);
   }
 
@@ -161,7 +161,7 @@ class NetworkManager {
   }
 
   void _updateHeadersFile() {
-    if (AppCache.instance.getApiToken()! != null) {
+    if (AppCache.instance.getApiToken() != null) {
       String? token = AppCache.instance.getApiToken()!;
       if (token != null) {
         headersFile['Authorization'] = "Bearer $token";

@@ -5,7 +5,7 @@ class AppStylesUtil {
           double size, Color textColor, FontWeight weight) =>
       TextStyle(
         fontSize: size,
-        fontFamily: 'Tajawal-Bold',
+        fontFamily: 'Tajawal',
         color: textColor,
         fontWeight: weight,
       );
@@ -14,7 +14,7 @@ class AppStylesUtil {
           double size, Color textColor, FontWeight weight) =>
       TextStyle(
         fontSize: size,
-        fontFamily: 'Tajawal-Regular',
+        fontFamily: 'Tajawal',
         color: textColor,
         fontWeight: weight,
       );

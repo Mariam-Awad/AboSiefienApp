@@ -1,12 +1,11 @@
-import 'dart:convert';
 import 'dart:math';
-import 'package:abosiefienapp/cache/app_cache.dart';
 import 'package:abosiefienapp/presentation/screens/auth/login_provider.dart';
+import 'package:abosiefienapp/utils/app_assets_util.dart';
 import 'package:abosiefienapp/utils/app_debug_prints.dart';
-import 'package:abosiefienapp/utils/commonProvider.dart';
+import 'package:abosiefienapp/utils/app_styles_util.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sizer/sizer.dart';
 
 enum AuthMode { Signup, Login }
 
@@ -18,62 +17,37 @@ class LoginScreen extends StatelessWidget {
     final deviceSize = MediaQuery.of(context).size;
     return Scaffold(
       body: Stack(
+        alignment: Alignment.topCenter,
         children: <Widget>[
           Container(
+            height: 220,
+            width: 220,
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Color.fromRGBO(215, 117, 255, 1).withOpacity(0.5),
-                  Color.fromRGBO(255, 188, 117, 1).withOpacity(0.9),
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                stops: [0, 1],
+                color: Colors.white, borderRadius: BorderRadius.circular(20.0)),
+            child: Center(
+              child: Image.asset(
+                AppAssetsUtil.logoImage,
+                fit: BoxFit.contain,
+                alignment: Alignment.center,
               ),
             ),
           ),
-          SingleChildScrollView(
-            child: Container(
+          Padding(
+            padding: const EdgeInsets.only(top: 20),
+            child: SizedBox(
               height: deviceSize.height,
               width: deviceSize.width,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Flexible(
-                    child: Container(
-                      margin: EdgeInsets.only(bottom: 20.0),
-                      padding:
-                          EdgeInsets.symmetric(vertical: 8.0, horizontal: 60.0),
-                      transform: Matrix4.rotationZ(-8 * pi / 180)
-                        ..translate(-10.0),
-                      // ..translate(-10.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.deepOrange.shade900,
-                        boxShadow: [
-                          BoxShadow(
-                            blurRadius: 8,
-                            color: Colors.black26,
-                            offset: Offset(0, 2),
-                          )
-                        ],
-                      ),
-                      child: Text(
-                        'برنامج اداره الخدمه',
-                        style: TextStyle(
-                          color: Colors.amber,
-                          fontSize: 30,
-                          fontFamily: 'Anton',
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                    ),
+                  Text(
+                    '"لِيَكُنْ كُلُّ وَاحِدٍ بِحَسَبِ مَا أَخَذَ مَوْهِبَةً، يَخْدِمُ بِهَا بَعْضُكُمْ بَعْضًا، كَوُكَلاَءَ صَالِحِينَ عَلَى نِعْمَةِ اللهِ الْمُتَنَوِّعَةِ." (1 بط 4: 10)',
+                    textAlign: TextAlign.center,
+                    style: AppStylesUtil.textBoldStyle(
+                        18.0, Colors.black, FontWeight.bold),
                   ),
-                  Flexible(
-                    flex: deviceSize.width > 600 ? 2 : 1,
-                    child: AuthCard(),
-                  ),
+                  const AuthCard(),
                 ],
               ),
             ),
@@ -95,15 +69,12 @@ class AuthCard extends StatefulWidget {
 
 class _AuthCardState extends State<AuthCard> {
   final GlobalKey<FormState> _formKey = GlobalKey();
-  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  bool isConnected = false;
 
-  bool _isConnected = false;
-  SharedPreferences? prefs;
-  Map<String, String> _authData = {
+  Map<String, String> authData = {
     'email': '',
     'password': '',
   };
-  var _isLoading = false;
   final _passwordController = TextEditingController();
 
   @override
@@ -118,25 +89,16 @@ class _AuthCardState extends State<AuthCard> {
       return;
     }
     _formKey.currentState!.save();
-    setState(() {
-      _isLoading = true;
-    });
-    // Log user in
-    try {
-      final user = await Provider.of<LoginProvider>(context, listen: false)
-          .login(_authData['email']!, _authData['password']!, context);
-
-      if (user == true) {
-        printDone('DDDDDonEEEEE');
-        // Navigator.pushReplacementNamed(context, HomeScreen.routeName);
-      }
-    } catch (e) {
-      print(e);
-    } finally {
-      setState(() {
-        _isLoading = false;
-      });
-    }
+    final user = await Provider.of<LoginProvider>(context, listen: false)
+        .login(authData['email']!, authData['password']!, context)
+        .then((value) => {
+              if (value == true)
+                {
+                  printDone('DONE')
+                  // todo
+                  // Navigator.pushReplacementNamed(context, HomeScreen.routeName);
+                }
+            });
   }
 
   @override
@@ -149,66 +111,66 @@ class _AuthCardState extends State<AuthCard> {
       elevation: 8.0,
       child: Container(
         height: 240,
-        constraints: BoxConstraints(minHeight: 240),
+        constraints: const BoxConstraints(minHeight: 240),
         width: deviceSize.width * 0.75,
-        padding: EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'User Name'),
-                  keyboardType: TextInputType.emailAddress,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'أسم المرور خطا';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    _authData['email'] = value!;
-                  },
-                ),
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'Password'),
-                  obscureText: true,
-                  controller: _passwordController,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'رقم المرور خطا';
-                    }
-                  },
-                  onSaved: (value) {
-                    _authData['password'] = value!;
-                  },
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                if (_isLoading)
-                  CircularProgressIndicator()
-                else
+        padding: const EdgeInsets.all(16.0),
+        child: Directionality(
+          textDirection: TextDirection.rtl,
+          child: Form(
+            key: _formKey,
+            child: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  TextFormField(
+                    textDirection: TextDirection.rtl,
+                    decoration:
+                        const InputDecoration(labelText: 'إسم المستخدم'),
+                    keyboardType: TextInputType.emailAddress,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'إسم المستخدم خطأ';
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      authData['email'] = value!;
+                    },
+                  ),
+                  TextFormField(
+                    textDirection: TextDirection.rtl,
+                    decoration: const InputDecoration(labelText: 'كلمة السر'),
+                    obscureText: true,
+                    controller: _passwordController,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'كلمة السر خطأ';
+                      }
+                    },
+                    onSaved: (value) {
+                      authData['password'] = value!;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Theme.of(context).primaryColor,
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 30.0, vertical: 8.0),
-                      shape: RoundedRectangleBorder(
+                      backgroundColor: Colors.deepOrange.shade900,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20.0, vertical: 8.0),
+                      shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(
-                          Radius.circular(30.0),
+                          Radius.circular(20.0),
                         ),
                       ),
                     ),
-                    child: Text(
-                      'LOGIN',
-                      style: TextStyle(
-                        color: Theme.of(context).primaryTextTheme.button!.color,
-                      ),
-                    ),
+                    child: Text('تسجيل الدخول',
+                        style: AppStylesUtil.textRegularStyle(
+                            16, Colors.white, FontWeight.w400)),
                     onPressed: _submit,
                   ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

@@ -1,3 +1,4 @@
+import 'package:abosiefienapp/utils/app_debug_prints.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AppCache {
@@ -23,7 +24,8 @@ class AppCache {
   }
 
   String? getApiToken() {
-    String? token = _prefs!.get(_KEY_TOKEN) as String?;
+    String? token = _prefs!.getString(_KEY_TOKEN);
+    printDone('storedToken id: $token');
     return token;
   }
 }

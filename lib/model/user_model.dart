@@ -1,38 +1,38 @@
 class UserModel {
+  Data? data;
   String? code;
   String? errorMsg;
-  Data? data;
   int? count;
   int? pageNo;
   bool? success;
   List<String>? listData;
 
   UserModel(
-      {this.code,
+      {this.data,
+      this.code,
       this.errorMsg,
-      this.data,
       this.count,
       this.pageNo,
       this.success,
       this.listData});
 
   UserModel.fromJson(Map<String, dynamic> json) {
-    code = json['code'];
-    errorMsg = json['errorMsg'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
-    count = json['count'];
-    pageNo = json['pageNo'];
-    success = json['success'];
-    listData = json['listData'].cast<String>();
+    data = json['data'] != null ?  Data.fromJson(json['data']) : null;
+    code = json['code'] ??  '';
+    errorMsg = json['errorMsg'] ?? '';
+    count = json['count'] ?? 0;
+    pageNo = json['pageNo'] ?? 0;
+    success = json['success'] ?? false;
+    listData = json['listData'] != null ? json['listData'].cast<String>() : [''];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['code'] = this.code;
-    data['errorMsg'] = this.errorMsg;
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
+    data['code'] = this.code;
+    data['errorMsg'] = this.errorMsg;
     data['count'] = this.count;
     data['pageNo'] = this.pageNo;
     data['success'] = this.success;
@@ -64,14 +64,14 @@ class Data {
       this.permissions});
 
   Data.fromJson(Map<String, dynamic> json) {
-    userId = json['userId'];
-    khademId = json['khademId'];
-    userName = json['userName'];
-    isActive = json['isActive'];
-    roleId = json['roleId'];
-    roleName = json['roleName'];
-    token = json['token'];
-    levelId = json['levelId'];
+    userId = json['userId'] ?? 0;
+    khademId = json['khademId'] ?? 0;
+    userName = json['userName'] ?? '';
+    isActive = json['isActive'] ?? false;
+    roleId = json['roleId'] ?? 0;
+    roleName = json['roleName'] ?? '';
+    token = json['token'] ?? '';
+    levelId = json['levelId'] ?? 0;
     if (json['permissions'] != null) {
       permissions = <Permissions>[];
       json['permissions'].forEach((v) {
@@ -103,7 +103,7 @@ class Permissions {
   Permissions({this.permissionName});
 
   Permissions.fromJson(Map<String, dynamic> json) {
-    permissionName = json['permissionName'];
+    permissionName = json['permissionName'] ?? '';
   }
 
   Map<String, dynamic> toJson() {

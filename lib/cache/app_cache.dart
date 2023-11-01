@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:abosiefienapp/model/user_model.dart';
 import 'package:abosiefienapp/utils/app_debug_prints.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -11,6 +14,7 @@ class AppCache {
   SharedPreferences? _prefs;
 
   static final String _KEY_TOKEN = "token";
+  static final String _KEY_USER = "user";
 
   AppCache._private();
 
@@ -27,5 +31,20 @@ class AppCache {
     String? token = _prefs!.getString(_KEY_TOKEN);
     printDone('storedToken id: $token');
     return token;
+  }
+
+  void removeToken() {
+    _prefs!.remove(_KEY_TOKEN);
+  }
+
+  void setUserModel(UserModel model) async {
+    if (model == null) return;
+    String json = jsonEncode(model.toJson());
+    await _prefs!.setString(_KEY_USER, json);
+    setApiToken(model.data!.token);
+  }
+  UserModel? getUserModel() {
+    String? json = _prefs!.getString(_KEY_USER);
+    return json == null ? null : UserModel.fromJson(jsonDecode(json));
   }
 }

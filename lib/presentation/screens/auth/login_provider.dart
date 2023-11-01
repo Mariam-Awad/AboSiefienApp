@@ -15,23 +15,27 @@ class LoginProvider extends ChangeNotifier {
     printWarning('password $password');
     customFunctions.showProgress(context);
     UserModel? response = await loginRepo.requestLogin(username, password);
+    notifyListeners();
     printDone('response $response');
     if (response != null && response.data != null) {
       try {
         if (response.success == true) {
-          AppCache.instance.setApiToken(response.data!.token);
+          AppCache.instance.setUserModel(response);
           printInfo('SET API TOKEN NOW');
           customFunctions.hideProgress();
+          notifyListeners();
           return true;
         }
       } catch (error) {
         printError(error);
         customFunctions.showError(message: response.errorMsg!);
         customFunctions.hideProgress();
+        notifyListeners();
         return false;
       }
     }
     customFunctions.hideProgress();
+    notifyListeners();
     return false;
   }
 }

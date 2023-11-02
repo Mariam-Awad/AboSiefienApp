@@ -1,4 +1,5 @@
 import 'package:abosiefienapp/presentation/widgets/card_widget.dart';
+import 'package:abosiefienapp/utils/app_routes.dart';
 import 'package:abosiefienapp/utils/app_styles_util.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +23,7 @@ class HistoryOfMakhdomsScreen extends StatelessWidget {
             CardWidget(
               "مخدومينى",
               () {
-                // Navigator.pushNamed(context, RegisterOfMakhdomen.routeName);
+                Navigator.pushNamed(context, AppRoutes.myMakhdomsRouteName);
               },
               Icons.person_search,
             ),

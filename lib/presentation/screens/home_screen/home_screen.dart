@@ -1,13 +1,14 @@
 import 'package:abosiefienapp/cache/app_cache.dart';
 import 'package:abosiefienapp/presentation/screens/home_screen/home_screen_provider.dart';
 import 'package:abosiefienapp/presentation/widgets/card_widget.dart';
-import 'package:abosiefienapp/utils/app_debug_prints.dart';
 import 'package:abosiefienapp/utils/app_routes.dart';
 import 'package:abosiefienapp/utils/app_styles_util.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -67,8 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: CardWidget(
                   "إدارة المخدومين",
                   () {
-                    Navigator.pushNamed(
-                        context, AppRoutes.manageOfMakhdomsRouteName);
+                    Navigator.pushNamed(context, AppRoutes.manageOfMakhdomsRouteName);
                   },
                   Icons.person_pin_sharp,
                 ),

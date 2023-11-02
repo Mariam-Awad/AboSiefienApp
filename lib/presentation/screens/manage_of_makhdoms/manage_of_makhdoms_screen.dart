@@ -3,7 +3,8 @@ import 'package:abosiefienapp/utils/app_styles_util.dart';
 import 'package:flutter/material.dart';
 
 class ManageOfMakhdoms extends StatelessWidget {
-  static const routeName = "/mangemakhdoms";
+  const ManageOfMakhdoms({super.key});
+
   @override
   Widget build(BuildContext context) {
     //final makhdom = Provider.of<Makhdoms>(context, listen: false);
@@ -25,7 +26,7 @@ class ManageOfMakhdoms extends StatelessWidget {
             CardWidget(
               'إضافة المخدومين',
               () {
-               // makhdom.addnew = true;
+                // makhdom.addnew = true;
                 //Navigator.pushNamed(context, MakhdomDetailsScreen.routeName);
               },
               Icons.person_add_alt_1,

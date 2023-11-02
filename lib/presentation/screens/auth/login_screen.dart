@@ -8,6 +8,8 @@ import 'package:provider/provider.dart';
 enum AuthMode { Signup, Login }
 
 class LoginScreen extends StatelessWidget {
+  const LoginScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;

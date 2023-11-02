@@ -17,26 +17,27 @@ class UserModel {
       this.listData});
 
   UserModel.fromJson(Map<String, dynamic> json) {
-    data = json['data'] != null ?  Data.fromJson(json['data']) : null;
-    code = json['code'] ??  '';
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
+    code = json['code'] ?? '';
     errorMsg = json['errorMsg'] ?? '';
     count = json['count'] ?? 0;
     pageNo = json['pageNo'] ?? 0;
     success = json['success'] ?? false;
-    listData = json['listData'] != null ? json['listData'].cast<String>() : [''];
+    listData =
+        json['listData'] != null ? json['listData'].cast<String>() : [''];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
-    data['code'] = this.code;
-    data['errorMsg'] = this.errorMsg;
-    data['count'] = this.count;
-    data['pageNo'] = this.pageNo;
-    data['success'] = this.success;
-    data['listData'] = this.listData;
+    data['code'] = code;
+    data['errorMsg'] = errorMsg;
+    data['count'] = count;
+    data['pageNo'] = pageNo;
+    data['success'] = success;
+    data['listData'] = listData;
     return data;
   }
 }
@@ -82,16 +83,16 @@ class Data {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['userId'] = this.userId;
-    data['khademId'] = this.khademId;
-    data['userName'] = this.userName;
-    data['isActive'] = this.isActive;
-    data['roleId'] = this.roleId;
-    data['roleName'] = this.roleName;
-    data['token'] = this.token;
-    data['levelId'] = this.levelId;
-    if (this.permissions != null) {
-      data['permissions'] = this.permissions!.map((v) => v.toJson()).toList();
+    data['userId'] =  userId;
+    data['khademId'] = khademId;
+    data['userName'] = userName;
+    data['isActive'] = isActive;
+    data['roleId'] = roleId;
+    data['roleName'] = roleName;
+    data['token'] = token;
+    data['levelId'] = levelId;
+    if (permissions != null) {
+      data['permissions'] = permissions!.map((v) => v.toJson()).toList();
     }
     return data;
   }

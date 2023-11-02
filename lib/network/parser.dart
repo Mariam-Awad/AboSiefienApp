@@ -1,3 +1,4 @@
+import 'package:abosiefienapp/model/mymakhdoms_model.dart';
 import 'package:abosiefienapp/model/user_model.dart';
 import 'package:abosiefienapp/utils/app_debug_prints.dart';
 
@@ -7,6 +8,8 @@ class Parser {
     switch (T) {
       case UserModel:
         return UserModel.fromJson(json);
+      case MyMakhdomsModel:
+        return MyMakhdomsModel.fromJson(json);
     }
   }
 }

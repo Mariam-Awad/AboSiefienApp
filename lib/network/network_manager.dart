@@ -40,7 +40,7 @@ class NetworkManager {
       String? token = AppCache.instance.getApiToken();
       printDone('token is: $token');
       if (token != null) {
-        headers['Authorization'] = "Bearer $token";
+        headers['Authorization'] = "$token";
       }
     }
 /*

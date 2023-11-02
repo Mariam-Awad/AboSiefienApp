@@ -1,7 +1,8 @@
 import 'package:abosiefienapp/presentation/screens/auth/login_screen.dart';
-import 'package:abosiefienapp/presentation/screens/history_of_makhdoms_screen/history_of_makhdoms_screen.dart';
+import 'package:abosiefienapp/presentation/screens/history_of_makhdoms/history_of_makhdoms_screen.dart';
 import 'package:abosiefienapp/presentation/screens/home_screen/home_screen.dart';
 import 'package:abosiefienapp/presentation/screens/manage_of_makhdoms/manage_of_makhdoms_screen.dart';
+import 'package:abosiefienapp/presentation/screens/my_makhdoms/my_makhdoms_screen.dart';
 import 'package:abosiefienapp/utils/app_routes.dart';
 import 'package:abosiefienapp/utils/app_styles_util.dart';
 import 'package:flutter/material.dart';
@@ -11,11 +12,11 @@ class AppRouteManager {
     switch (settings.name) {
       case AppRoutes.loginScreenRouteName:
         return MaterialPageRoute(
-          builder: (context) => LoginScreen(),
+          builder: (context) => const LoginScreen(),
         );
       case AppRoutes.homeRouteName:
         return MaterialPageRoute(
-          builder: (context) => HomeScreen(),
+          builder: (context) => const HomeScreen(),
         );
       case AppRoutes.historyOfMakhdomsRouteName:
         return MaterialPageRoute(
@@ -23,7 +24,11 @@ class AppRouteManager {
         );
       case AppRoutes.manageOfMakhdomsRouteName:
         return MaterialPageRoute(
-          builder: (context) => ManageOfMakhdoms(),
+          builder: (context) => const ManageOfMakhdoms(),
+        );
+      case AppRoutes.myMakhdomsRouteName:
+        return MaterialPageRoute(
+          builder: (context) => const MyMakhdomsScreen(),
         );
       default:
         return _undefinedRoute();

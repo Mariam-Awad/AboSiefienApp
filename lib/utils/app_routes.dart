@@ -3,4 +3,5 @@ class AppRoutes {
   static const String homeRouteName = "/home";
   static const String historyOfMakhdomsRouteName = "/historyofmakhdoms";
   static const String manageOfMakhdomsRouteName = "/manageofmakhdoms";
+  static const String myMakhdomsRouteName = "/mymakhdoms";
 }

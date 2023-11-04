@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:abosiefienapp/cache/app_cache.dart';
+import 'package:abosiefienapp/model/mymakhdoms_model.dart';
 import 'package:abosiefienapp/network/parser.dart';
 import 'package:abosiefienapp/utils/app_debug_prints.dart';
 import 'package:alice/alice.dart';
@@ -92,20 +93,19 @@ class NetworkManager {
     return parseResponse<T>(response);
   }
 
-  Future<Response> put<T>(String url, {String? body}) async {
+  Future<T?> put<T>(String url, {Map<String, dynamic>? body}) async {
     _updateHeaders();
-    if (body == null) body = "";
+    if (body == null) body = {};
+    print(body);
 
     var formData = json.encode(body);
-    print(formData);
-    var updatedData = jsonDecode(formData);
-    print(updatedData);
-
     Response response = await dio.put(url,
         cancelToken: cancelToken,
         options: Options(headers: headers),
-        data: updatedData);
-    return response;
+        data: formData);
+    printDone('response.statusCode ${response.runtimeType}');
+    printWarning('IN Put $response');
+    return parseResponse<T>(response);
   }
 
   Future<Response> postString(String url, String body) async {
@@ -171,9 +171,9 @@ class NetworkManager {
 
   T? parseResponse<T>(Response response) {
     if (response.statusCode != 200) return null;
-
     var map;
     if (T == null || T == dynamic) {
+      printDone('IN If Condition');
       return response.data;
     } else {
       map = response.data;

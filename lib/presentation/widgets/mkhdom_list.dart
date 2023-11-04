@@ -1,4 +1,6 @@
 import 'package:abosiefienapp/presentation/screens/my_makhdoms/my_makhdoms_provider.dart';
+import 'package:abosiefienapp/utils/app_debug_prints.dart';
+import 'package:abosiefienapp/utils/app_routes.dart';
 import 'package:abosiefienapp/utils/app_styles_util.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -54,13 +56,13 @@ class MakdomList extends StatelessWidget {
                             children: [
                               InkWell(
                                 onTap: () {
-                                  // _makhdoms.addnew = false;
-                                  // printWarning('makhdom ${_makhdoms.addnew}');
-                                  // Navigator.pushNamed(
-                                  //   context,
-                                  //   MakhdomDetailsScreen.routeName,
-                                  //   arguments: makhdom,
-                                  // );
+                                  printWarning('Check Parse $makhdom');
+                                  printWarning('makhdomDetails Navigate');
+                                  Navigator.pushNamed(
+                                    context,
+                                    AppRoutes.makhdomDetailsRouteName,
+                                    arguments: makhdom,
+                                  );
                                 },
                                 child: Text(
                                   makhdom.name ?? "",

@@ -13,10 +13,11 @@ class MakhdomUpdateModel {
     code = json['code'] ?? '';
     errorMsg = json['errorMsg'] ?? '';
     data = json['data'] != null ? Data.fromJson(json['data']) : null;
-    count = json['count']?? 0;
+    count = json['count'] ?? 0;
     pageNo = json['pageNo'] ?? 0;
     success = json['success'] ?? false;
-    listData = json['listData'] != null ? json['listData'].cast<String>() : [''];
+    listData =
+        json['listData'] != null ? json['listData'].cast<String>() : [''];
   }
 
   Map<String, dynamic> toJson() {

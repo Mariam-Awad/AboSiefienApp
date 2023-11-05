@@ -9,6 +9,7 @@ import 'package:abosiefienapp/utils/app_routes.dart';
 import 'package:abosiefienapp/utils/route_manager.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -25,30 +26,32 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => LoginProvider()),
-        ChangeNotifierProvider(create: (context) => HomeScreenProvider()),
-        ChangeNotifierProvider(create: (context) => MyMakhdomsProvider()),
-        ChangeNotifierProvider(create: (context) => MakhdomDetailsProvider()),
-      ],
-      child: MaterialApp(
-        builder: BotToastInit(),
-        navigatorObservers: [BotToastNavigatorObserver()],
-        debugShowCheckedModeBanner: false,
-        title: "App Siefien App",
-        theme: ThemeData(
-          //  primarySwatch: Colors.purple,
-          primaryColor: Colors.purple,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-        ),
-        home: MyHomePage(title: 'Flutter Demo Home Page'),
-        routes: {
-          AppRoutes.homeRouteName: (ctx) => HomeScreen(),
-          AppRoutes.historyOfMakhdomsRouteName: (ctx) =>
-              const HistoryOfMakhdomsScreen(),
-        },
-      ),
-    );
+        providers: [
+          ChangeNotifierProvider(create: (context) => LoginProvider()),
+          ChangeNotifierProvider(create: (context) => HomeScreenProvider()),
+          ChangeNotifierProvider(create: (context) => MyMakhdomsProvider()),
+          ChangeNotifierProvider(create: (context) => MakhdomDetailsProvider()),
+        ],
+        child: ScreenUtilInit(
+          designSize: const Size(375, 812),
+          builder: (context, child) => MaterialApp(
+            builder: BotToastInit(),
+            navigatorObservers: [BotToastNavigatorObserver()],
+            debugShowCheckedModeBanner: false,
+            title: "App Siefien App",
+            theme: ThemeData(
+              //  primarySwatch: Colors.purple,
+              primaryColor: Colors.purple,
+              visualDensity: VisualDensity.adaptivePlatformDensity,
+            ),
+            home: MyHomePage(title: 'Flutter Demo Home Page'),
+            routes: {
+              AppRoutes.homeRouteName: (ctx) => HomeScreen(),
+              AppRoutes.historyOfMakhdomsRouteName: (ctx) =>
+                  const HistoryOfMakhdomsScreen(),
+            },
+          ),
+        ));
   }
 }
 

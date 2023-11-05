@@ -3,4 +3,5 @@ class Endpoints {
   static const REQUEST_LOGIN = "$BASE_URL/auth/login";
   static const REQUEST_MY_MAKHDOMS = "$BASE_URL/makhdom/mymakhdoms";
   static const REQUEST_UPDATE_MAKHDOM = "$BASE_URL/makhdom";
+  static const REQUEST_ATTENDANCE = "$BASE_URL/attendance"; 
 }

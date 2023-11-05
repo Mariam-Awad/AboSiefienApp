@@ -1,5 +1,6 @@
 import 'package:abosiefienapp/model/makhdom_update_model.dart';
 import 'package:abosiefienapp/model/mymakhdoms_model.dart' as mymakhdomsmodel;
+import 'package:abosiefienapp/model/radio_button_model.dart';
 import 'package:abosiefienapp/repositories/my_makhdoms_repo.dart';
 import 'package:abosiefienapp/repositories/update_makhdom_repo.dart';
 import 'package:abosiefienapp/utils/app_debug_prints.dart';
@@ -11,6 +12,17 @@ class MakhdomDetailsProvider extends ChangeNotifier {
   MyMakhdomsRepo myMakhdomsRepo = MyMakhdomsRepo();
   CustomFunctions customFunctions = CustomFunctions();
   UpdateMakhdomRepo updateMakhdomRepo = UpdateMakhdomRepo();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController phone2Controller = TextEditingController();
+  TextEditingController addressNumberController = TextEditingController();
+  TextEditingController addressStreetController = TextEditingController();
+  TextEditingController fatherController = TextEditingController();
+  TextEditingController universityController = TextEditingController();
+  TextEditingController facultyController = TextEditingController();
+  TextEditingController levelController = TextEditingController();
+  TextEditingController notesController = TextEditingController();
+  RadioButtonModel genderValue = RadioButtonModel(1, true);
 
   void setRecievedMakhdom(mymakhdomsmodel.Data? makhdom) {
     recievedMakhdom = makhdom ?? mymakhdomsmodel.Data();
@@ -18,7 +30,8 @@ class MakhdomDetailsProvider extends ChangeNotifier {
     printError('recievedMakhdom $recievedMakhdom');
   }
 
-  Future<bool> updateMyMakhdom(BuildContext context, mymakhdomsmodel.Data data) async {
+  Future<bool> updateMyMakhdom(
+      BuildContext context, mymakhdomsmodel.Data data) async {
     printWarning('data $data');
     try {
       customFunctions.showProgress(context);

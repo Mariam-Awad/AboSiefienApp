@@ -1,9 +1,11 @@
 import 'package:abosiefienapp/presentation/screens/home_screen/home_screen_provider.dart';
 import 'package:abosiefienapp/presentation/screens/my_makhdoms/my_makhdoms_provider.dart';
 import 'package:abosiefienapp/presentation/widgets/mkhdom_list.dart';
+import 'package:abosiefienapp/presentation/widgets/search_section_widget.dart';
 import 'package:abosiefienapp/utils/app_debug_prints.dart';
 import 'package:abosiefienapp/utils/app_styles_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -53,52 +55,49 @@ class _MyMakhdomsScreenState extends State<MyMakhdomsScreen> {
           ),
           body: mymakhdomsprovider.listLength == 0
               ? Container()
-              // Center(
-              //     child: Text(
-              //       'لا يوجد مخدومين',
-              //       style: AppStylesUtil.textRegularStyle(
-              //           20.0, Colors.black, FontWeight.w500),
-              //       textAlign: TextAlign.center,
-              //     ),
-              //   )
-              : Column(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        margin: const EdgeInsets.all(10),
-                        child: ListView.builder(
-                          itemCount: mymakhdomsprovider.allMakhdoms
-                              .length, //provider.allMakhdoms?.length,
-                          itemBuilder: (ctx, index) {
-                            return MakdomList(
-                              mymakhdomsprovider.allMakhdoms[
-                                  index], // provider.allMakhdoms![index],
-                              Icons.phone,
-                              () => launchUrl(Uri.parse(
-                                  'tel://${mymakhdomsprovider.allMakhdoms[index].phone}')), //provider.allMakhdoms![index].phone
-                              false,
-                            );
-                          },
+              : Padding(
+                  padding:
+                      EdgeInsets.symmetric(vertical: 20.h, horizontal: 20.w),
+                  child: Column(
+                    children: [
+                      SearchSectionWidget(provider: mymakhdomsprovider,),
+                      Expanded(
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(vertical: 10),
+                          child: ListView.builder(
+                            itemCount: mymakhdomsprovider.allMakhdoms
+                                .length, //provider.allMakhdoms?.length,
+                            itemBuilder: (ctx, index) {
+                              return MakdomList(
+                                mymakhdomsprovider.allMakhdoms[
+                                    index], // provider.allMakhdoms![index],
+                                Icons.phone,
+                                () => launchUrl(Uri.parse(
+                                    'tel://${mymakhdomsprovider.allMakhdoms[index].phone}')), //provider.allMakhdoms![index].phone
+                                false,
+                              );
+                            },
+                          ),
                         ),
                       ),
-                    ),
-                    Card(
-                      elevation: 5,
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 5),
-                      child: Container(
-                        height: 40,
-                        width: double.infinity,
-                        padding: const EdgeInsets.all(5),
-                        child: Text(
-                          "إجمالى العدد : ${mymakhdomsprovider.allMakhdoms.length}", //provider.allMakhdoms?.length
-                          style: AppStylesUtil.textRegularStyle(
-                              20.0, Colors.black, FontWeight.w500),
-                          textAlign: TextAlign.end,
+                      Card(
+                        elevation: 5,
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 5),
+                        child: Container(
+                          height: 40,
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(5),
+                          child: Text(
+                            "إجمالى العدد : ${mymakhdomsprovider.allMakhdoms.length}", //provider.allMakhdoms?.length
+                            style: AppStylesUtil.textRegularStyle(
+                                20.0, Colors.black, FontWeight.w500),
+                            textAlign: TextAlign.end,
+                          ),
                         ),
-                      ),
-                    )
-                  ],
+                      )
+                    ],
+                  ),
                 ));
     });
   }

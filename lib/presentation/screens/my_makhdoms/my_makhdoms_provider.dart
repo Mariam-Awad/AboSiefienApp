@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:abosiefienapp/cache/app_cache.dart';
 import 'package:abosiefienapp/model/mymakhdoms_model.dart';
+import 'package:abosiefienapp/model/radio_button_model.dart';
 import 'package:abosiefienapp/repositories/my_makhdoms_repo.dart';
 import 'package:abosiefienapp/shared/custom_function.dart';
 import 'package:abosiefienapp/utils/app_debug_prints.dart';
@@ -13,11 +14,28 @@ import 'package:url_launcher/url_launcher.dart';
 class MyMakhdomsProvider extends ChangeNotifier {
   MyMakhdomsRepo myMakhdomsRepo = MyMakhdomsRepo();
   CustomFunctions customFunctions = CustomFunctions();
+  TextEditingController searchController = TextEditingController();
+
   int pageSize = 20;
   int pageNo = 1;
   int listLength = 0;
   List<Data> allMakhdoms = [];
   String errorMsg = 'حدث خطأ ما برجاء المحاولة مرة اّخرى';
+  RadioButtonModel sortValue = RadioButtonModel(1, true);
+  RadioButtonModel filterValue = RadioButtonModel(1, true);
+
+  int? selectedAdvertiserStatus;
+  String? selectedLasrAttendanceDate = '';
+
+  void setSelectedAdvertiserStatus(int? value) {
+    selectedAdvertiserStatus = value;
+    notifyListeners();
+  }
+
+  void setSelectedLastAttendanceDate(String? value) {
+    selectedLasrAttendanceDate = value;
+    notifyListeners();
+  }
 
   Future<bool> myMakhdoms(BuildContext context) async {
     printWarning('pageSize $pageSize');
@@ -61,8 +79,6 @@ class MyMakhdomsProvider extends ChangeNotifier {
     notifyListeners();
     return false;
   }
-
-
 
   void sendWhatsAppMessage({
     required BuildContext context,

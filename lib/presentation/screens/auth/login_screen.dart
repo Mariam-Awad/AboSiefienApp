@@ -42,7 +42,7 @@ class LoginScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Text(
-                      '"ارْعَوْا رَعِيَّةَ اللهِ الَّتِي بَيْنَكُمْ"',
+                      'ارْعَوْا رَعِيَّةَ اللهِ الَّتِي بَيْنَكُمْ',
                       textAlign: TextAlign.center,
                       style: AppStylesUtil.textBoldStyle(
                           18.0, Colors.black, FontWeight.bold),
@@ -51,7 +51,7 @@ class LoginScreen extends StatelessWidget {
                       height: 8,
                     ),
                     Text(
-                      '(1 بط 5: 2)',
+                      '1 بط 5: 2',
                       textAlign: TextAlign.center,
                       textDirection: TextDirection.rtl,
                       style: AppStylesUtil.textBoldStyle(

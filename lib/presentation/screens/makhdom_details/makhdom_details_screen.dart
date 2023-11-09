@@ -1,5 +1,6 @@
 import 'package:abosiefienapp/model/mymakhdoms_model.dart';
 import 'package:abosiefienapp/presentation/screens/makhdom_details/makhdom_details_provider.dart';
+import 'package:abosiefienapp/presentation/screens/my_makhdoms/my_makhdoms_provider.dart';
 import 'package:abosiefienapp/presentation/widgets/app_date_picker_widget.dart';
 import 'package:abosiefienapp/presentation/widgets/gender.dart';
 import 'package:abosiefienapp/presentation/widgets/input_form_fields.dart';
@@ -39,7 +40,8 @@ class _MakhdomDetailsScreenState extends State<MakhdomDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Map<String, dynamic> _makhdomData = {};
+    Map<String, dynamic> makhdomData = {};
+    MyMakhdomsProvider myMakhdomsProvider;
     return Consumer<MakhdomDetailsProvider>(
         builder: (context, makhdomdetailsprovider, child) {
       printError(
@@ -192,10 +194,10 @@ class _MakhdomDetailsScreenState extends State<MakhdomDetailsScreen> {
                             children: [
                               Text(
                                 makhdomdetailsprovider
-                                            .recievedMakhdom!.birthdate !=
+                                            .recievedMakhdom!.birthdate ==
                                         null
-                                    ? '${makhdomdetailsprovider.recievedMakhdom!.birthdate!}'
-                                    : '2023/11/23',
+                                    ? '2023/11/23'
+                                    : '${makhdomdetailsprovider.convertToDate(makhdomdetailsprovider.recievedMakhdom!.birthdate ?? '')}',
                                 style: AppStylesUtil.textBoldStyle(
                                   16.sp,
                                   Colors.black,

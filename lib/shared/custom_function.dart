@@ -1,3 +1,4 @@
+import 'package:abosiefienapp/utils/app_styles_util.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,28 +9,30 @@ class CustomFunctions {
   bool loaderVisible = false;
   CancelFunc? cancelFunc;
 
-  void showError({required String message}) {
-    Fluttertoast.showToast(
-      msg: message,
-      toastLength: Toast.LENGTH_LONG,
-      gravity: ToastGravity.TOP,
-      timeInSecForIosWeb: 2,
-      backgroundColor: Colors.red.shade900,
-      textColor: Colors.white,
-      fontSize: 14.sp,
-    );
+  void showError({required String message, required BuildContext context}) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: Colors.red,
+        content: Text(
+          message,
+          textDirection: TextDirection.rtl,
+          textAlign: TextAlign.center,
+          style:
+              AppStylesUtil.textRegularStyle(18, Colors.white, FontWeight.w400),
+        )));
   }
 
-  void showSuccess({required String message}) {
-    Fluttertoast.showToast(
-      msg: message,
-      toastLength: Toast.LENGTH_LONG,
-      gravity: ToastGravity.TOP,
-      timeInSecForIosWeb: 2,
-      backgroundColor: Colors.green.shade900,
-      textColor: Colors.white,
-      fontSize: 14.sp,
-    );
+  void showSuccess({required String message, required BuildContext context}) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: Colors.green,
+        content: Text(
+          message,
+          textDirection: TextDirection.rtl,
+          textAlign: TextAlign.center,
+          style:
+              AppStylesUtil.textRegularStyle(18, Colors.white, FontWeight.w400),
+        )));
   }
 
   void closeKeyboard(BuildContext context) {
@@ -95,5 +98,3 @@ class CustomFunctions {
     );
   }
 }
-
-

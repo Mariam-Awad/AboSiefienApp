@@ -28,7 +28,7 @@ class LoginProvider extends ChangeNotifier {
         }
       } catch (error) {
         printError(error);
-        customFunctions.showError(message: response.errorMsg!);
+        customFunctions.showError(message: response.errorMsg!, context: context);
         customFunctions.hideProgress();
         notifyListeners();
         return false;

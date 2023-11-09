@@ -4,6 +4,7 @@ import 'package:abosiefienapp/presentation/widgets/card_widget.dart';
 import 'package:abosiefienapp/utils/app_routes.dart';
 import 'package:abosiefienapp/utils/app_styles_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -27,53 +28,63 @@ class _HomeScreenState extends State<HomeScreen> {
     return Consumer<HomeScreenProvider>(
       builder: (context, homescreenprovider, child) {
         //printWarning(homescreenprovider.permisions);
-        return Scaffold(
-          appBar: AppBar(
-            title: Text(
-              "برنامج المخدومين",
-              style: AppStylesUtil.textBoldStyle(
-                  22, Colors.white, FontWeight.w500),
+        return WillPopScope(
+          onWillPop: () async {
+            SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+            return false;
+          },
+          child: Scaffold(
+            appBar: AppBar(
+              title: Text(
+                "برنامج المخدومين",
+                textDirection: TextDirection.rtl,
+                style: AppStylesUtil.textBoldStyle(
+                    22, Colors.white, FontWeight.w500),
+              ),
+              // automaticallyImplyLeading: false,
+              actions: [
+                IconButton(
+                    icon: const Icon(Icons.logout),
+                    onPressed: () async {
+                      AppCache.instance.removeToken();
+                      SystemChannels.platform
+                          .invokeMethod('SystemNavigator.pop');
+                    })
+              ],
+              // leading: Text("data"),
             ),
-            actions: [
-              IconButton(
-                  icon: const Icon(Icons.logout),
-                  onPressed: () async {
-                    AppCache.instance.removeToken();
-                    Navigator.of(context)
-                        .pushReplacementNamed(AppRoutes.loginScreenRouteName);
-                  })
-            ],
-            //leading: Text("data"),
-          ),
-          body: SizedBox(
-            height: double.infinity,
-            width: double.infinity,
-            child: Column(children: [
-              const SizedBox(
-                height: 10,
-              ),
-              Visibility(
-                visible: homescreenprovider.hasGetMakhdomsPermission,
-                child: CardWidget(
-                  "سجل المخدومين",
-                  () {
-                    Navigator.pushNamed(
-                        context, AppRoutes.historyOfMakhdomsRouteName);
-                  },
-                  Icons.person,
+            body: SizedBox(
+              height: double.infinity,
+              width: double.infinity,
+              child: Column(children: [
+                const SizedBox(
+                  height: 10,
                 ),
-              ),
-              Visibility(
-                visible: true, //homescreenprovider.hasManageMakhdomsPermission,
-                child: CardWidget(
-                  "إدارة المخدومين",
-                  () {
-                    Navigator.pushNamed(context, AppRoutes.manageOfMakhdomsRouteName);
-                  },
-                  Icons.person_pin_sharp,
+                Visibility(
+                  visible: homescreenprovider.hasGetMakhdomsPermission,
+                  child: CardWidget(
+                    "سجل المخدومين",
+                    () {
+                      Navigator.pushNamed(
+                          context, AppRoutes.historyOfMakhdomsRouteName);
+                    },
+                    Icons.person,
+                  ),
                 ),
-              ),
-            ]),
+                Visibility(
+                  visible:
+                      true, //homescreenprovider.hasManageMakhdomsPermission,
+                  child: CardWidget(
+                    "إدارة المخدومين",
+                    () {
+                      Navigator.pushNamed(
+                          context, AppRoutes.manageOfMakhdomsRouteName);
+                    },
+                    Icons.person_pin_sharp,
+                  ),
+                ),
+              ]),
+            ),
           ),
         );
       },

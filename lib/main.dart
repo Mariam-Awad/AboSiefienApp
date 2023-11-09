@@ -4,6 +4,7 @@ import 'package:abosiefienapp/presentation/screens/history_of_makhdoms/history_o
 import 'package:abosiefienapp/presentation/screens/home_screen/home_screen.dart';
 import 'package:abosiefienapp/presentation/screens/home_screen/home_screen_provider.dart';
 import 'package:abosiefienapp/presentation/screens/makhdom_details/makhdom_details_provider.dart';
+import 'package:abosiefienapp/presentation/screens/manage_of_makhdoms/manage_of_makhdoms_screen.dart';
 import 'package:abosiefienapp/presentation/screens/my_makhdoms/my_makhdoms_provider.dart';
 import 'package:abosiefienapp/utils/app_routes.dart';
 import 'package:abosiefienapp/utils/route_manager.dart';
@@ -44,12 +45,13 @@ class MyApp extends StatelessWidget {
               primaryColor: Colors.purple,
               visualDensity: VisualDensity.adaptivePlatformDensity,
             ),
-            home: MyHomePage(title: 'Flutter Demo Home Page'),
-            routes: {
-              AppRoutes.homeRouteName: (ctx) => HomeScreen(),
-              AppRoutes.historyOfMakhdomsRouteName: (ctx) =>
-                  const HistoryOfMakhdomsScreen(),
-            },
+            home: MyHomePage(title: ''),
+            // routes: {
+            //   AppRoutes.homeRouteName: (ctx) => const HomeScreen(),
+            //   AppRoutes.historyOfMakhdomsRouteName: (ctx) =>
+            //       const HistoryOfMakhdomsScreen(),
+            //   AppRoutes.manageOfMakhdomsRouteName: (ctx) => const ManageOfMakhdoms()
+            // },
           ),
         ));
   }

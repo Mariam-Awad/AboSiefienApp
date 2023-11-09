@@ -3,13 +3,9 @@ import 'package:abosiefienapp/cache/app_cache.dart';
 import 'package:abosiefienapp/model/mymakhdoms_model.dart';
 import 'package:abosiefienapp/network/parser.dart';
 import 'package:abosiefienapp/utils/app_debug_prints.dart';
-import 'package:alice/alice.dart';
 import 'package:dio/dio.dart';
 
 class NetworkManager {
-  static Alice? alice = Alice(
-      showNotification: true, showInspectorOnShake: true, darkTheme: false);
-
   late Dio dio;
   CancelToken? cancelToken;
 
@@ -32,7 +28,6 @@ class NetworkManager {
       responseBody: true,
       responseHeader: false,
     ));
-    if (alice != null) dio.interceptors.add(alice!.getDioInterceptor());
   }
 
   void _updateHeaders() {

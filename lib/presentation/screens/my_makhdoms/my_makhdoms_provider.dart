@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:abosiefienapp/cache/app_cache.dart';
 import 'package:abosiefienapp/model/mymakhdoms_model.dart';
 import 'package:abosiefienapp/model/radio_button_model.dart';
@@ -7,7 +6,6 @@ import 'package:abosiefienapp/repositories/my_makhdoms_repo.dart';
 import 'package:abosiefienapp/shared/custom_function.dart';
 import 'package:abosiefienapp/utils/app_debug_prints.dart';
 import 'package:abosiefienapp/utils/app_styles_util.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:url_launcher/url_launcher.dart';
@@ -77,13 +75,14 @@ class MyMakhdomsProvider extends ChangeNotifier {
       //  }
     } catch (error) {
       printError(error);
-      customFunctions.showError(message: errorMsg);
+      customFunctions.showError(message: errorMsg, context: context);
       customFunctions.hideProgress();
       notifyListeners();
       return false;
     }
     customFunctions.hideProgress();
-    customFunctions.showError(message: 'حدث خطأ ما برجاء المحاولة مرة اّخرى');
+    customFunctions.showError(
+        message: 'حدث خطأ ما برجاء المحاولة مرة اّخرى', context: context);
     notifyListeners();
     return false;
   }
@@ -94,9 +93,9 @@ class MyMakhdomsProvider extends ChangeNotifier {
   }) async {
     String url() {
       if (Platform.isIOS) {
-        return "whatsapp://wa.me/+20$phone/?text=${Uri.parse('')}";
+        return "https://api.whatsapp.com/send?phone=$phone=${Uri.parse('')}";
       } else {
-        return "whatsapp://send?phone=+20$phone&text=";
+        return "https://wa.me/02$phone/?text=";
       }
     }
 

@@ -6,6 +6,7 @@ import 'package:abosiefienapp/repositories/update_makhdom_repo.dart';
 import 'package:abosiefienapp/utils/app_debug_prints.dart';
 import 'package:flutter/material.dart';
 import 'package:abosiefienapp/shared/custom_function.dart';
+import 'package:intl/intl.dart' as intl;
 
 class MakhdomDetailsProvider extends ChangeNotifier {
   mymakhdomsmodel.Data? recievedMakhdom;
@@ -42,6 +43,8 @@ class MakhdomDetailsProvider extends ChangeNotifier {
       if (responseUpdateMyMakhdom != null &&
           responseUpdateMyMakhdom.success == true) {
         printInfo('Updated Now');
+        customFunctions.showSuccess(
+            message: 'تم التعديل بنجاح', context: context);
         customFunctions.hideProgress();
         notifyListeners();
         return true;
@@ -49,14 +52,23 @@ class MakhdomDetailsProvider extends ChangeNotifier {
       //  }
     } catch (error) {
       printError(error);
-      customFunctions.showError(message: 'لم يتم حفظ التعديلات');
+      customFunctions.showError(
+          message: 'لم يتم حفظ التعديلات', context: context);
       customFunctions.hideProgress();
       notifyListeners();
       return false;
     }
     customFunctions.hideProgress();
-    customFunctions.showError(message: 'حدث خطأ ما برجاء المحاولة مرة اّخرى');
+    customFunctions.showError(
+        message: 'حدث خطأ ما برجاء المحاولة مرة اّخرى', context: context);
     notifyListeners();
     return false;
+  }
+
+    String? convertToDate(String? datestring) {
+    String apiDateString = datestring ?? '';
+    DateTime apiDate = DateTime.parse(apiDateString);
+    String formattedDate =  intl.DateFormat('dd/MM/yyyy').format(apiDate);
+    return formattedDate;
   }
 }

@@ -2,7 +2,7 @@
     package="com.example.NewAboSiefienApp">
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
-        android:label="AboSiefien"
+        android:label="Flock of God"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true">

@@ -43,19 +43,21 @@ class AppRouteManager {
           ),
         );
       default:
-        return _undefinedRoute();
+        return MaterialPageRoute(
+          builder: (context) => const HomeScreen(),
+        ); //_undefinedRoute();
     }
   }
 
-  static Route<dynamic> _undefinedRoute() => MaterialPageRoute(
-        builder: (context) => Scaffold(
-          body: Center(
-            child: Text(
-              "هذه الصفحة غير متوفرة الاّن",
-              style: AppStylesUtil.textRegularStyle(
-                  20, Colors.black, FontWeight.bold),
-            ),
-          ),
-        ),
-      );
+  // static Route<dynamic> _undefinedRoute() => MaterialPageRoute(
+  //       builder: (context) => Scaffold(
+  //         body: Center(
+  //           child: Text(
+  //             "هذه الصفحة غير متوفرة الاّن",
+  //             style: AppStylesUtil.textRegularStyle(
+  //                 20, Colors.black, FontWeight.bold),
+  //           ),
+  //         ),
+  //       ),
+  //     );
 }

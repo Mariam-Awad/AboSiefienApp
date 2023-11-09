@@ -9,37 +9,44 @@ import 'package:abosiefienapp/utils/app_debug_prints.dart';
 import 'package:abosiefienapp/utils/app_styles_util.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart' as intl;
 import 'package:url_launcher/url_launcher.dart';
 
 class MyMakhdomsProvider extends ChangeNotifier {
   MyMakhdomsRepo myMakhdomsRepo = MyMakhdomsRepo();
   CustomFunctions customFunctions = CustomFunctions();
-  TextEditingController searchController = TextEditingController();
 
-  int pageSize = 20;
-  int pageNo = 1;
+// Sort and Filter
+  TextEditingController searchController = TextEditingController();
+  List<Data> items = [];
+  RadioButtonModel sortValue = RadioButtonModel(1, true);
+  int sortCoulmn = 1;
+  int sortDirection = 1;
+  String absentDate = '';
+
   int listLength = 0;
   List<Data> allMakhdoms = [];
   String errorMsg = 'حدث خطأ ما برجاء المحاولة مرة اّخرى';
-  RadioButtonModel sortValue = RadioButtonModel(1, true);
-  RadioButtonModel filterValue = RadioButtonModel(1, true);
 
-  int? selectedAdvertiserStatus;
-  String? selectedLasrAttendanceDate = '';
-
-  void setSelectedAdvertiserStatus(int? value) {
-    selectedAdvertiserStatus = value;
+  void setSelectedAbsentDate(String? value) {
+    absentDate = value!;
     notifyListeners();
   }
 
-  void setSelectedLastAttendanceDate(String? value) {
-    selectedLasrAttendanceDate = value;
+  void setSelectedSortColumn(int? value) {
+    sortCoulmn = value!;
+    notifyListeners();
+  }
+
+  void setSelectedSortDir(int? value) {
+    sortDirection = value!;
     notifyListeners();
   }
 
   Future<bool> myMakhdoms(BuildContext context) async {
-    printWarning('pageSize $pageSize');
-    printWarning('pageNo $pageNo');
+    printWarning('sortCoulmn $sortCoulmn');
+    printWarning('sortDirection $sortDirection');
+    printWarning('absentDate $absentDate');
     try {
       customFunctions.showProgress(context);
       // MyMakhdomsModel? storedmodel = AppCache.instance.getMyMakhdomsModel();
@@ -50,8 +57,8 @@ class MyMakhdomsProvider extends ChangeNotifier {
       //   notifyListeners();
       //   return true;
       // } else {
-      MyMakhdomsModel? responseMyMakhdoms =
-          await myMakhdomsRepo.requestMyMakhdoms(pageSize, pageNo);
+      MyMakhdomsModel? responseMyMakhdoms = await myMakhdomsRepo
+          .requestMyMakhdoms(sortCoulmn, sortDirection, absentDate);
       printDone('response $responseMyMakhdoms');
       notifyListeners();
       if (responseMyMakhdoms != null &&
@@ -60,6 +67,7 @@ class MyMakhdomsProvider extends ChangeNotifier {
         AppCache.instance.setMyMakhdomsModel(responseMyMakhdoms);
         listLength = responseMyMakhdoms.data!.length;
         allMakhdoms = responseMyMakhdoms.data!;
+        items = allMakhdoms;
         errorMsg = responseMyMakhdoms.errorMsg!;
         printInfo('SET MYMAKHDOMS IN STORAGE NOW');
         customFunctions.hideProgress();
@@ -105,4 +113,18 @@ class MyMakhdomsProvider extends ChangeNotifier {
   }
 
   int get makhdomsListLength => listLength;
+
+  String? convertToDate(String? datestring) {
+    String apiDateString = datestring ?? '';
+    DateTime apiDate = DateTime.parse(apiDateString);
+    String formattedDate = intl.DateFormat('dd/MM/yyyy').format(apiDate);
+    return formattedDate;
+  }
+
+  void filterSearchResults(String query) {
+    items = allMakhdoms
+        .where((item) => item.name!.toLowerCase().contains(query.toLowerCase()))
+        .toList();
+    notifyListeners();
+  }
 }

@@ -1,3 +1,4 @@
+import 'package:abosiefienapp/presentation/screens/makhdom_details/makhdom_details_provider.dart';
 import 'package:abosiefienapp/presentation/screens/my_makhdoms/my_makhdoms_provider.dart';
 import 'package:abosiefienapp/presentation/widgets/app_date_picker_widget.dart';
 import 'package:abosiefienapp/presentation/widgets/arrange_section_widget.dart';
@@ -17,7 +18,6 @@ class FilterBottomSheetWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<MyMakhdomsProvider>(
         builder: (context, MyMakhdomsProvider, child) {
-      printError('my ${MyMakhdomsProvider.sortValue.value}');
       return Directionality(
         textDirection: TextDirection.rtl,
         child: Padding(
@@ -57,16 +57,21 @@ class FilterBottomSheetWidget extends StatelessWidget {
                     title2: 'الإسم',
                     title3: 'الشارع',
                     title4: 'اخر حضور',
-                    title5: 'اخر إفتقاد',
+                    title5: '',
                     color: Colors.black,
-                    onChanged: () {}),
+                    onChanged: (value) {
+                      MyMakhdomsProvider.setSelectedSortColumn(value ?? 1);
+                      printDone(
+                          'SORT COLUMN Updated ${MyMakhdomsProvider.sortCoulmn}');
+                    }),
                 const ArrangeSectionWidget(),
                 const Divider(
                   color: Colors.black26,
                   thickness: 1,
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10.w),
+                  padding:
+                      EdgeInsets.only(left: 10.w, right: 10.w, bottom: 220.h),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -76,16 +81,25 @@ class FilterBottomSheetWidget extends StatelessWidget {
                         style: AppStylesUtil.textBoldStyle(
                             20, Colors.black, FontWeight.bold),
                       ),
-                      GenderSelect(
-                          checkedIncome: true,
-                          radioValue: MyMakhdomsProvider.filterValue,
-                          title1: '',
-                          title2: 'اخر حضور',
-                          title3: 'اخر إفتقاد',
-                          color: Colors.black,
-                          onChanged: () {
-                            // todo
-                          }),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      Text(
+                        'تاريخ الغياب',
+                        textDirection: TextDirection.rtl,
+                        style: AppStylesUtil.textBoldStyle(
+                            18, Colors.black, FontWeight.normal),
+                      ),
+                      // GenderSelect(
+                      //     checkedIncome: true,
+                      //     radioValue: MyMakhdomsProvider.filterValue,
+                      //     title1: '',
+                      //     title2: 'اخر حضور',
+                      //     title3: 'اخر إفتقاد',
+                      //     color: Colors.black,
+                      //     onChanged: () {
+                      //       // todo
+                      //     }),
                       SizedBox(
                         height: 12.h,
                       ),
@@ -104,10 +118,11 @@ class FilterBottomSheetWidget extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              MyMakhdomsProvider.selectedLasrAttendanceDate ??
-                                  'اخر حضور',
+                              MyMakhdomsProvider.absentDate == ''
+                                  ? 'اختر تاريخ الغياب'
+                                  : MyMakhdomsProvider.absentDate,
                               style: AppStylesUtil.textBoldStyle(
-                                16.sp,
+                                12.sp,
                                 Colors.black,
                                 FontWeight.w400,
                               ),
@@ -116,12 +131,11 @@ class FilterBottomSheetWidget extends StatelessWidget {
                               onTap: () async {
                                 DateTime? selected =
                                     await customShowDatePicker(context);
-                                MyMakhdomsProvider
-                                    .setSelectedLastAttendanceDate(
-                                        intl.DateFormat('yyyy-MM-dd')
-                                            .format(selected!));
-                                printWarning(
-                                    'LAST ATTENDANCE ${MyMakhdomsProvider.selectedLasrAttendanceDate ?? ''}');
+                                MyMakhdomsProvider.setSelectedAbsentDate(
+                                    intl.DateFormat('yyyy-MM-dd')
+                                        .format(selected!));
+                                printDone(
+                                    'ABSENT DATE Updated ${MyMakhdomsProvider.absentDate}');
                               },
                               child: Icon(
                                 Icons.date_range,
@@ -137,6 +151,32 @@ class FilterBottomSheetWidget extends StatelessWidget {
                         thickness: 1,
                       ),
                     ],
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      fixedSize: Size(400.w, 40.h),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20.0, vertical: 8.0),
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(20.0),
+                        ),
+                      ),
+                    ),
+                    child: Text('بحـث',
+                        style: AppStylesUtil.textRegularStyle(
+                            20, Colors.white, FontWeight.bold)),
+                    onPressed: () {
+                      MyMakhdomsProvider.myMakhdoms(context).then((value) {
+                        if (value == true) {
+                          Navigator.pop(context);
+                        }
+                      });
+                    },
                   ),
                 ),
               ],

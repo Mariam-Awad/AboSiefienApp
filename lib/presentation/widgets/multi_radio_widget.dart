@@ -36,7 +36,6 @@ class _MultiRadioWidgetState extends State<MultiRadioWidget> {
   @override
   Widget build(BuildContext context) {
     int _value = widget.radioValue.value;
-    printWarning('_value $_value');
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Column(
@@ -52,119 +51,81 @@ class _MultiRadioWidgetState extends State<MultiRadioWidget> {
                   FontWeight.bold),
             ),
           ),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Padding(
-              padding: const EdgeInsets.only(right: 10.0, left: 10),
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Radio(
-                            value: 1,
-                            groupValue: _value,
-                            fillColor: MaterialStateProperty.all(Colors.blue),
-                            onChanged: (dynamic value) {
-                              setState(() {
-                                _value = value;
-                                widget.radioValue.value = value;
-                                widget.onChanged();
-                              });
-                            }),
-                        Text(widget.title2,
-                            style: AppStylesUtil.textRegularStyle(
-                                16,
-                                widget.color != null
-                                    ? widget.color!
-                                    : Colors.white,
-                                FontWeight.normal)),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Radio(
-                            value: 3,
-                            groupValue: _value,
-                            fillColor: MaterialStateProperty.all(Colors.blue),
-                            onChanged: (dynamic value) {
-                              setState(() {
-                                _value = value;
-                                widget.radioValue.value = value;
-                                widget.onChanged();
-                              });
-                            }),
-                        Text(widget.title4,
-                            style: AppStylesUtil.textRegularStyle(
-                                16,
-                                widget.color != null
-                                    ? widget.color!
-                                    : Colors.white,
-                                FontWeight.normal)),
-                      ],
-                    ),
-                  ]),
-            ),
-            const SizedBox(
-              height: 0.0,
-            ),
-            Padding(
-              padding: EdgeInsets.only(right: 5.w, left: 5.w),
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Radio(
-                            value: 2,
-                            groupValue: _value,
-                            fillColor: MaterialStateProperty.all(Colors.blue),
-                            onChanged: (dynamic value) {
-                              setState(() {
-                                _value = value;
-                                widget.radioValue.value = value;
-                                widget.onChanged();
-                              });
-                            }),
-                        Text(widget.title3,
-                            style: AppStylesUtil.textRegularStyle(
-                                16,
-                                widget.color != null
-                                    ? widget.color!
-                                    : Colors.white,
-                                FontWeight.normal)),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Radio(
-                            value: 4,
-                            groupValue: _value,
-                            fillColor: MaterialStateProperty.all(Colors.blue),
-                            onChanged: (dynamic value) {
-                              setState(() {
-                                _value = value;
-                                widget.radioValue.value = value;
-                                widget.onChanged();
-                              });
-                            }),
-                        Text(widget.title5,
-                            style: AppStylesUtil.textRegularStyle(
-                                16,
-                                widget.color != null
-                                    ? widget.color!
-                                    : Colors.white,
-                                FontWeight.normal)),
-                      ],
-                    ),
-                  ]),
-            ),
-          ]),
+          Padding(
+            padding: const EdgeInsets.only(
+                right: 10.0, left: 10, bottom: 20.0, top: 10.0),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Radio(
+                          value: 1,
+                          groupValue: _value,
+                          fillColor: MaterialStateProperty.all(Colors.blue),
+                          onChanged: (dynamic value) {
+                            _value = value;
+                            widget.radioValue.value = value;
+                            widget.onChanged(value);
+                          }),
+                      Text(widget.title2,
+                          style: AppStylesUtil.textRegularStyle(
+                              16,
+                              widget.color != null
+                                  ? widget.color!
+                                  : Colors.white,
+                              FontWeight.normal)),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Radio(
+                          value: 2,
+                          groupValue: _value,
+                          fillColor: MaterialStateProperty.all(Colors.blue),
+                          onChanged: (dynamic value) {
+                            _value = value;
+                            widget.radioValue.value = value;
+                            widget.onChanged(value);
+                          }),
+                      Text(widget.title3,
+                          style: AppStylesUtil.textRegularStyle(
+                              16,
+                              widget.color != null
+                                  ? widget.color!
+                                  : Colors.white,
+                              FontWeight.normal)),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Radio(
+                          value: 3,
+                          groupValue: _value,
+                          fillColor: MaterialStateProperty.all(Colors.blue),
+                          onChanged: (dynamic value) {
+                            _value = value;
+                            widget.radioValue.value = value;
+                            widget.onChanged(value);
+                          }),
+                      Text(widget.title4,
+                          style: AppStylesUtil.textRegularStyle(
+                              16,
+                              widget.color != null
+                                  ? widget.color!
+                                  : Colors.white,
+                              FontWeight.normal)),
+                    ],
+                  ),
+                ]),
+          ),
+          const SizedBox(
+            height: 0.0,
+          ),
         ],
       ),
     );

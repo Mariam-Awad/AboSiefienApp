@@ -60,20 +60,20 @@ class _MyMakhdomsScreenState extends State<MyMakhdomsScreen> {
                       EdgeInsets.symmetric(vertical: 20.h, horizontal: 20.w),
                   child: Column(
                     children: [
-                      SearchSectionWidget(provider: mymakhdomsprovider,),
+                      SearchSectionWidget(
+                        provider: mymakhdomsprovider,
+                      ),
                       Expanded(
                         child: Container(
                           margin: const EdgeInsets.symmetric(vertical: 10),
                           child: ListView.builder(
-                            itemCount: mymakhdomsprovider.allMakhdoms
-                                .length, //provider.allMakhdoms?.length,
+                            itemCount: mymakhdomsprovider.items.length,
                             itemBuilder: (ctx, index) {
                               return MakdomList(
-                                mymakhdomsprovider.allMakhdoms[
-                                    index], // provider.allMakhdoms![index],
+                                mymakhdomsprovider.items[index],
                                 Icons.phone,
                                 () => launchUrl(Uri.parse(
-                                    'tel://${mymakhdomsprovider.allMakhdoms[index].phone}')), //provider.allMakhdoms![index].phone
+                                    'tel://${mymakhdomsprovider.items[index].phone}')), //provider.allMakhdoms![index].phone
                                 false,
                               );
                             },

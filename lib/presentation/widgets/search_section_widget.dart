@@ -61,7 +61,11 @@ class SearchSectionWidget extends StatelessWidget {
             child: Directionality(
               textDirection: TextDirection.rtl,
               child: TextFormField(
-                controller: provider!.searchController,
+                controller: provider!.searchController, // todo here
+                onChanged: (value) {
+                  // todo here
+                  provider!.filterSearchResults(value);
+                },
                 decoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: 'ابحث هنا ..',

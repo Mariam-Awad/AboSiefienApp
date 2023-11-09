@@ -21,7 +21,6 @@ class MakdomList extends StatelessWidget {
   Widget build(BuildContext context) {
     final MyMakhdomsProvider provider =
         Provider.of<MyMakhdomsProvider>(context);
-
     return makhdom.name != null
         ? ClipRRect(
             borderRadius: BorderRadius.circular(24.0),
@@ -38,6 +37,7 @@ class MakdomList extends StatelessWidget {
                       const EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -52,7 +52,8 @@ class MakdomList extends StatelessWidget {
                                 color: Theme.of(context).primaryColor,
                               )),
                           Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               InkWell(
                                 onTap: () {
@@ -66,9 +67,10 @@ class MakdomList extends StatelessWidget {
                                 },
                                 child: Text(
                                   makhdom.name ?? "",
-                                  textAlign: TextAlign.center,
+                                  textAlign: TextAlign.start,
+                                  textDirection: TextDirection.rtl,
                                   style: AppStylesUtil.textBoldStyle(
-                                      20.0, Colors.black, FontWeight.w500),
+                                      17.0, Colors.black, FontWeight.w500),
                                 ),
                               ),
                               Row(
@@ -135,21 +137,23 @@ class MakdomList extends StatelessWidget {
                         ],
                       ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'اخر حضور: ${makhdom.lastAttendanceDate ?? 'لا يوجد'}',
+                            makhdom.lastAttendanceDate == null
+                                ? 'اخر حضور: لا يوجد'
+                                : 'اخر حضور: ${provider.convertToDate(makhdom.lastAttendanceDate ?? '')}',
                             style: AppStylesUtil.textRegularStyle(
                                 12, Colors.green, FontWeight.bold),
                           ),
-                          const SizedBox(
-                            width: 35.0,
-                          ),
-                          Text(
-                            'اخر إفتقاد: ${makhdom.lastCallDate ?? 'لا يوجد'}',
-                            style: AppStylesUtil.textRegularStyle(
-                                12, Colors.red, FontWeight.bold),
-                          ),
+                          // const SizedBox(
+                          //   width: 35.0,
+                          // ),
+                          // Text(
+                          //   'اخر إفتقاد: ${makhdom.lastCallDate ?? 'لا يوجد'}',
+                          //   style: AppStylesUtil.textRegularStyle(
+                          //       12, Colors.red, FontWeight.bold),
+                          // ),
                         ],
                       ),
                     ],

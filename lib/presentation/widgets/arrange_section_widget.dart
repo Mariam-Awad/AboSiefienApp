@@ -29,9 +29,12 @@ class ArrangeSectionWidget extends StatelessWidget {
                       DefaultModel(id: 1, name: 'تصاعدى'),
                       DefaultModel(id: 2, name: 'تنازلى'),
                     ],
-                    value: MyMakhdomsProvider.selectedAdvertiserStatus,
+                    value: MyMakhdomsProvider.sortDirection,
                     onChanged: (val) {
-                      MyMakhdomsProvider.setSelectedAdvertiserStatus(val);
+                      MyMakhdomsProvider.setSelectedSortDir(val ?? 1);
+
+                      printDone(
+                          'Sort Direction updated ${MyMakhdomsProvider.sortDirection}');
                     },
                   ),
                 )),

@@ -6,10 +6,10 @@ import 'package:abosiefienapp/network/end_points.dart';
 import 'package:abosiefienapp/utils/app_debug_prints.dart';
 
 class MyMakhdomsRepo extends BaseRepo {
-  Future<MyMakhdomsModel?> requestMyMakhdoms(int pageSize, int pageNo) {
+  Future<MyMakhdomsModel?> requestMyMakhdoms(int sortColumn, int sortDirection, String absentDate) {
     printWarning('Iam In HistoryOfMakhdoms Repo');
     return networkManager.get<MyMakhdomsModel>(Endpoints.REQUEST_MY_MAKHDOMS,
-        params: {"pagesize": pageSize, "pageno": pageNo});
+        params: {"sortCoulmn": sortColumn, "sortDirection": sortDirection , "absentDate": absentDate });
   }
 
   Future requestUpdateMakhdom(Data data) {

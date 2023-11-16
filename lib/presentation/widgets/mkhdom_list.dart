@@ -126,7 +126,8 @@ class MakdomList extends StatelessWidget {
                                             onPressed: () {
                                               provider.sendWhatsAppMessage(
                                                   context: context,
-                                                  phone: makhdom.phone!);
+                                                  phone: makhdom.phone!,
+                                                  );
                                             },
                                           ),
                                         ],

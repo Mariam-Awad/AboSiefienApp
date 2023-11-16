@@ -70,8 +70,10 @@ class _MakhdomDetailsScreenState extends State<MakhdomDetailsScreen> {
                         InputFieldWidget(
                           labeltext: 'الإسم',
                           initialvalue:
-                              makhdomdetailsprovider.recievedMakhdom!.name ??
-                                  '',
+                              makhdomdetailsprovider.recievedMakhdom!.name !=
+                                      'null'
+                                  ? makhdomdetailsprovider.recievedMakhdom!.name
+                                  : '',
                           width: MediaQuery.of(context).size.width - 40,
                           //  controller: nameController,
                           keyboardType: TextInputType.text,
@@ -87,9 +89,11 @@ class _MakhdomDetailsScreenState extends State<MakhdomDetailsScreen> {
                         ),
                         InputFieldWidget(
                             labeltext: 'التليفون',
-                            initialvalue:
-                                makhdomdetailsprovider.recievedMakhdom!.phone ??
-                                    '',
+                            initialvalue: makhdomdetailsprovider
+                                        .recievedMakhdom!.phone !=
+                                    'null'
+                                ? makhdomdetailsprovider.recievedMakhdom!.phone
+                                : '',
                             width: MediaQuery.of(context).size.width - 40,
                             //  controller: nameController,
                             keyboardType: TextInputType.number,
@@ -105,8 +109,10 @@ class _MakhdomDetailsScreenState extends State<MakhdomDetailsScreen> {
                         InputFieldWidget(
                             labeltext: 'رقم تليفون اّخر',
                             initialvalue: makhdomdetailsprovider
-                                    .recievedMakhdom!.phone2 ??
-                                '',
+                                        .recievedMakhdom!.phone2 !=
+                                    'null'
+                                ? makhdomdetailsprovider.recievedMakhdom!.phone2
+                                : '',
                             width: MediaQuery.of(context).size.width - 40,
                             //  controller: nameController,
                             keyboardType: TextInputType.number,
@@ -134,9 +140,12 @@ class _MakhdomDetailsScreenState extends State<MakhdomDetailsScreen> {
                         InputFieldWidget(
                             labeltext: 'العنوان/رقم',
                             initialvalue: makhdomdetailsprovider
-                                    .recievedMakhdom!.addNo
-                                    .toString() ??
-                                '',
+                                        .recievedMakhdom!.addNo
+                                        .toString() !=
+                                    'null'
+                                ? makhdomdetailsprovider.recievedMakhdom!.addNo
+                                    .toString()
+                                : '',
                             width: MediaQuery.of(context).size.width - 40,
                             keyboardType: TextInputType.number,
                             lines: 1,
@@ -150,9 +159,13 @@ class _MakhdomDetailsScreenState extends State<MakhdomDetailsScreen> {
                         InputFieldWidget(
                             labeltext: 'العنوان/شارع',
                             initialvalue: makhdomdetailsprovider
+                                        .recievedMakhdom!.addStreet
+                                        .toString() !=
+                                    'null'
+                                ? makhdomdetailsprovider
                                     .recievedMakhdom!.addStreet
-                                    .toString() ??
-                                '',
+                                    .toString()
+                                : '',
                             width: MediaQuery.of(context).size.width - 40,
                             keyboardType: TextInputType.text,
                             lines: 1,
@@ -161,6 +174,26 @@ class _MakhdomDetailsScreenState extends State<MakhdomDetailsScreen> {
                             onChanged: (value) {
                               makhdomdetailsprovider
                                   .recievedMakhdom!.addStreet = value ?? '';
+                              //  _makhdomData['addStreet'] = value ?? '';
+                            }),
+                        InputFieldWidget(
+                            labeltext: 'بجانب',
+                            initialvalue: makhdomdetailsprovider
+                                        .recievedMakhdom!.addBeside
+                                        .toString() !=
+                                    'null'
+                                ? makhdomdetailsprovider
+                                    .recievedMakhdom!.addBeside
+                                    .toString()
+                                : '',
+                            width: MediaQuery.of(context).size.width - 40,
+                            keyboardType: TextInputType.text,
+                            lines: 1,
+                            obscure: false,
+                            textAlign: TextAlign.start,
+                            onChanged: (value) {
+                              makhdomdetailsprovider
+                                  .recievedMakhdom!.addBeside = value ?? '';
                               //  _makhdomData['addStreet'] = value ?? '';
                             }),
                         Padding(
@@ -231,9 +264,12 @@ class _MakhdomDetailsScreenState extends State<MakhdomDetailsScreen> {
                         InputFieldWidget(
                             labeltext: 'أب الإعتراف',
                             initialvalue: makhdomdetailsprovider
-                                    .recievedMakhdom!.father
-                                    .toString() ??
-                                '',
+                                        .recievedMakhdom!.father
+                                        .toString() !=
+                                    'null'
+                                ? makhdomdetailsprovider.recievedMakhdom!.father
+                                    .toString()
+                                : '',
                             width: MediaQuery.of(context).size.width - 40,
                             //  controller: nameController,
                             validation: makhdomdetailsprovider.fatherController
@@ -250,9 +286,13 @@ class _MakhdomDetailsScreenState extends State<MakhdomDetailsScreen> {
                         InputFieldWidget(
                             labeltext: 'الجامعة',
                             initialvalue: makhdomdetailsprovider
+                                        .recievedMakhdom!.university
+                                        .toString() !=
+                                    'null'
+                                ? makhdomdetailsprovider
                                     .recievedMakhdom!.university
-                                    .toString() ??
-                                '',
+                                    .toString()
+                                : '',
                             width: MediaQuery.of(context).size.width - 40,
                             //  controller: nameController,
                             validation: makhdomdetailsprovider
@@ -270,9 +310,13 @@ class _MakhdomDetailsScreenState extends State<MakhdomDetailsScreen> {
                         InputFieldWidget(
                             labeltext: 'الكلية',
                             initialvalue: makhdomdetailsprovider
+                                        .recievedMakhdom!.faculty
+                                        .toString() !=
+                                    'null'
+                                ? makhdomdetailsprovider
                                     .recievedMakhdom!.faculty
-                                    .toString() ??
-                                '',
+                                    .toString()
+                                : '',
                             width: MediaQuery.of(context).size.width - 40,
                             //  controller: nameController,
                             validation: makhdomdetailsprovider.facultyController
@@ -308,9 +352,12 @@ class _MakhdomDetailsScreenState extends State<MakhdomDetailsScreen> {
                         InputFieldWidget(
                             labeltext: 'الملاحظات',
                             initialvalue: makhdomdetailsprovider
-                                    .recievedMakhdom!.notes
-                                    .toString() ??
-                                '',
+                                        .recievedMakhdom!.notes
+                                        .toString() !=
+                                    'null'
+                                ? makhdomdetailsprovider.recievedMakhdom!.notes
+                                    .toString()
+                                : '',
                             width: MediaQuery.of(context).size.width - 40,
                             //  controller: nameController,
                             validation: makhdomdetailsprovider.notesController
@@ -343,29 +390,41 @@ class _MakhdomDetailsScreenState extends State<MakhdomDetailsScreen> {
                                   18, Colors.white, FontWeight.bold)),
                           onPressed: () {
                             printDone(
-                                makhdomdetailsprovider.recievedMakhdom!.name!);
+                                makhdomdetailsprovider.recievedMakhdom!.name ??
+                                    '');
                             printDone(
-                                makhdomdetailsprovider.recievedMakhdom!.phone!);
+                                makhdomdetailsprovider.recievedMakhdom!.phone ??
+                                    '');
                             printDone(makhdomdetailsprovider
-                                .recievedMakhdom!.phone2!);
+                                    .recievedMakhdom!.phone2 ??
+                                '');
                             printDone(makhdomdetailsprovider
-                                .recievedMakhdom!.genderId!);
+                                    .recievedMakhdom!.genderId ??
+                                '');
                             printDone(
-                                makhdomdetailsprovider.recievedMakhdom!.addNo!);
+                                makhdomdetailsprovider.recievedMakhdom!.addNo ??
+                                    '');
                             printDone(makhdomdetailsprovider
-                                .recievedMakhdom!.addStreet!);
+                                    .recievedMakhdom!.addStreet ??
+                                '');
                             printDone(makhdomdetailsprovider
-                                .recievedMakhdom!.birthdate!);
+                                    .recievedMakhdom!.birthdate ??
+                                '');
                             printDone(makhdomdetailsprovider
-                                .recievedMakhdom!.father!);
+                                    .recievedMakhdom!.father ??
+                                '');
                             printDone(makhdomdetailsprovider
-                                .recievedMakhdom!.university!);
+                                    .recievedMakhdom!.university ??
+                                '');
                             printDone(makhdomdetailsprovider
-                                .recievedMakhdom!.faculty!);
+                                    .recievedMakhdom!.faculty ??
+                                '');
                             printDone(makhdomdetailsprovider
-                                .recievedMakhdom!.levelId!);
+                                    .recievedMakhdom!.levelId ??
+                                '');
                             printDone(
-                                makhdomdetailsprovider.recievedMakhdom!.notes!);
+                                makhdomdetailsprovider.recievedMakhdom!.notes ??
+                                    '');
                             makhdomdetailsprovider.updateMyMakhdom(
                                 context,
                                 makhdomdetailsprovider.recievedMakhdom ??

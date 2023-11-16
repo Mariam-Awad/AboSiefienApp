@@ -23,7 +23,7 @@ class FilterBottomSheetWidget extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20.0),
           child: SizedBox(
-            height: MediaQuery.of(context).size.height * 2,
+            height: MediaQuery.of(context).size.height / 1.4,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -38,6 +38,7 @@ class FilterBottomSheetWidget extends StatelessWidget {
                     ),
                     IconButton(
                         onPressed: () {
+                          //  MyMakhdomsProvider.clearFilterDate();
                           Navigator.pop(context);
                         },
                         icon: const Icon(
@@ -71,7 +72,7 @@ class FilterBottomSheetWidget extends StatelessWidget {
                 ),
                 Padding(
                   padding:
-                      EdgeInsets.only(left: 10.w, right: 10.w, bottom: 220.h),
+                      EdgeInsets.only(left: 10.w, right: 10.w, bottom: 40.h),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -90,16 +91,6 @@ class FilterBottomSheetWidget extends StatelessWidget {
                         style: AppStylesUtil.textBoldStyle(
                             18, Colors.black, FontWeight.normal),
                       ),
-                      // GenderSelect(
-                      //     checkedIncome: true,
-                      //     radioValue: MyMakhdomsProvider.filterValue,
-                      //     title1: '',
-                      //     title2: 'اخر حضور',
-                      //     title3: 'اخر إفتقاد',
-                      //     color: Colors.black,
-                      //     onChanged: () {
-                      //       // todo
-                      //     }),
                       SizedBox(
                         height: 12.h,
                       ),
@@ -114,36 +105,36 @@ class FilterBottomSheetWidget extends StatelessWidget {
                             width: 2.0,
                           ),
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              MyMakhdomsProvider.absentDate == ''
-                                  ? 'اختر تاريخ الغياب'
-                                  : MyMakhdomsProvider.absentDate,
-                              style: AppStylesUtil.textBoldStyle(
-                                12.sp,
-                                Colors.black,
-                                FontWeight.w400,
+                        child: InkWell(
+                          onTap: () async {
+                            DateTime? selected =
+                                await customShowDatePicker(context);
+                            MyMakhdomsProvider.setSelectedAbsentDate(
+                                intl.DateFormat('yyyy-MM-dd')
+                                    .format(selected!));
+                            printDone(
+                                'ABSENT DATE Updated ${MyMakhdomsProvider.absentDate}');
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                MyMakhdomsProvider.absentDate == ''
+                                    ? 'اختر تاريخ الغياب'
+                                    : MyMakhdomsProvider.absentDate,
+                                style: AppStylesUtil.textBoldStyle(
+                                  12.sp,
+                                  Colors.black,
+                                  FontWeight.w400,
+                                ),
                               ),
-                            ),
-                            InkWell(
-                              onTap: () async {
-                                DateTime? selected =
-                                    await customShowDatePicker(context);
-                                MyMakhdomsProvider.setSelectedAbsentDate(
-                                    intl.DateFormat('yyyy-MM-dd')
-                                        .format(selected!));
-                                printDone(
-                                    'ABSENT DATE Updated ${MyMakhdomsProvider.absentDate}');
-                              },
-                              child: Icon(
+                              Icon(
                                 Icons.date_range,
                                 color: Colors.blue,
                                 size: 20.sp,
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                       const Divider(
@@ -155,28 +146,53 @@ class FilterBottomSheetWidget extends StatelessWidget {
                 ),
                 Align(
                   alignment: Alignment.bottomCenter,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      fixedSize: Size(400.w, 40.h),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20.0, vertical: 8.0),
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(20.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blue,
+                          fixedSize: Size(220.w, 40.h),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20.0, vertical: 8.0),
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(20.0),
+                            ),
+                          ),
                         ),
+                        child: Text('بحــــث',
+                            style: AppStylesUtil.textRegularStyle(
+                                20, Colors.white, FontWeight.bold)),
+                        onPressed: () {
+                          MyMakhdomsProvider.myMakhdoms(context).then((value) {
+                            if (value == true) {
+                              Navigator.pop(context);
+                              MyMakhdomsProvider.clearFilterDate();
+                            }
+                          });
+                        },
                       ),
-                    ),
-                    child: Text('بحـث',
-                        style: AppStylesUtil.textRegularStyle(
-                            20, Colors.white, FontWeight.bold)),
-                    onPressed: () {
-                      MyMakhdomsProvider.myMakhdoms(context).then((value) {
-                        if (value == true) {
-                          Navigator.pop(context);
-                        }
-                      });
-                    },
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          fixedSize: Size(100.w, 40.h),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 4.0, vertical: 8.0),
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(20.0),
+                            ),
+                          ),
+                        ),
+                        child: Text('مسح الكل',
+                            style: AppStylesUtil.textRegularStyle(
+                                14.sp, Colors.blue, FontWeight.w500)),
+                        onPressed: () {
+                          MyMakhdomsProvider.clearFilterDate();
+                        },
+                      ),
+                    ],
                   ),
                 ),
               ],

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 import 'package:abosiefienapp/cache/app_cache.dart';
 import 'package:abosiefienapp/model/mymakhdoms_model.dart';
 import 'package:abosiefienapp/model/radio_button_model.dart';
@@ -28,6 +29,13 @@ class MyMakhdomsProvider extends ChangeNotifier {
 
   void setSelectedAbsentDate(String? value) {
     absentDate = value!;
+    notifyListeners();
+  }
+
+  void clearFilterDate() {
+    absentDate = '';
+    sortCoulmn = 1;
+    sortDirection = 1;
     notifyListeners();
   }
 
@@ -99,16 +107,21 @@ class MyMakhdomsProvider extends ChangeNotifier {
       }
     }
 
-    await canLaunch(url())
-        ? launch(url())
-        : ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    if (await canLaunchUrl(Uri.parse(url()))) {
+      try {
+        launchUrl(Uri.parse(url()));
+      } catch (error) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            behavior: SnackBarBehavior.floating,
             backgroundColor: Colors.red,
             content: Text(
-              'عذراً لايوجد واتساب على جهازك!',
+              error.toString(),
               textDirection: TextDirection.rtl,
               style: AppStylesUtil.textRegularStyle(
                   18, Colors.white, FontWeight.w400),
             )));
+      }
+    }
   }
 
   int get makhdomsListLength => listLength;

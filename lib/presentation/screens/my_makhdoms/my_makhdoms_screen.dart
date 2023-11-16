@@ -18,6 +18,13 @@ class MyMakhdomsScreen extends StatefulWidget {
 }
 
 class _MyMakhdomsScreenState extends State<MyMakhdomsScreen> {
+
+  @override
+  void deactivate() {
+     Provider.of<MyMakhdomsProvider>(context, listen: false).clearFilterDate();
+    super.deactivate();
+  }
+
   @override
   void initState() {
     // CALL MAKHDOMS LIST

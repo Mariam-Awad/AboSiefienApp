@@ -4,6 +4,7 @@ import 'package:abosiefienapp/model/radio_button_model.dart';
 import 'package:abosiefienapp/repositories/my_makhdoms_repo.dart';
 import 'package:abosiefienapp/repositories/update_makhdom_repo.dart';
 import 'package:abosiefienapp/utils/app_debug_prints.dart';
+import 'package:abosiefienapp/utils/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:abosiefienapp/shared/custom_function.dart';
 import 'package:intl/intl.dart' as intl;
@@ -45,6 +46,7 @@ class MakhdomDetailsProvider extends ChangeNotifier {
         printInfo('Updated Now');
         customFunctions.showSuccess(
             message: 'تم التعديل بنجاح', context: context);
+        Navigator.pushNamed(context, AppRoutes.myMakhdomsRouteName);
         customFunctions.hideProgress();
         notifyListeners();
         return true;
@@ -65,10 +67,10 @@ class MakhdomDetailsProvider extends ChangeNotifier {
     return false;
   }
 
-    String? convertToDate(String? datestring) {
+  String? convertToDate(String? datestring) {
     String apiDateString = datestring ?? '';
     DateTime apiDate = DateTime.parse(apiDateString);
-    String formattedDate =  intl.DateFormat('dd/MM/yyyy').format(apiDate);
+    String formattedDate = intl.DateFormat('dd/MM/yyyy').format(apiDate);
     return formattedDate;
   }
 }

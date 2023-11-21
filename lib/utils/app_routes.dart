@@ -5,4 +5,5 @@ class AppRoutes {
   static const String manageOfMakhdomsRouteName = "/manageofmakhdoms";
   static const String myMakhdomsRouteName = "/mymakhdoms";
   static const String makhdomDetailsRouteName = "/makhdomdetails";
+  static const String addMakhdomRouteName = "/addmakhdom";
 }

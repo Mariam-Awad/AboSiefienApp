@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:abosiefienapp/model/khadem_model.dart';
 import 'package:abosiefienapp/model/mymakhdoms_model.dart';
 import 'package:abosiefienapp/model/user_model.dart';
 import 'package:abosiefienapp/utils/app_debug_prints.dart';
@@ -17,6 +18,7 @@ class AppCache {
   static final String _KEY_TOKEN = "token";
   static final String _KEY_USER = "user";
   static final String _KEY_MYMAKHDOMS = "mymakhdoms";
+  static final String _KEY_khadem = "khadem";
 
   AppCache._private();
 
@@ -61,5 +63,16 @@ class AppCache {
   MyMakhdomsModel? getMyMakhdomsModel() {
     String? json = _prefs!.getString(_KEY_MYMAKHDOMS);
     return json == null ? null : MyMakhdomsModel.fromJson(jsonDecode(json));
+  }
+
+  void setKhademModel(KhademModel model) async {
+    if (model == null) return;
+    String json = jsonEncode(model.toJson());
+    await _prefs!.setString(_KEY_khadem, json);
+  }
+
+  KhademModel? getKhademModel() {
+    String? json = _prefs!.getString(_KEY_khadem);
+    return json == null ? null : KhademModel.fromJson(jsonDecode(json));
   }
 }

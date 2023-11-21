@@ -1,7 +1,6 @@
 import 'package:abosiefienapp/utils/app_styles_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class CustomDropdownWidget extends StatelessWidget {
   final List? items;
@@ -53,11 +52,28 @@ class CustomDropdownWidget extends StatelessWidget {
             .map((item) => DropdownMenuItem<int>(
                   alignment: Alignment.centerRight,
                   value: item.id,
-                  child: Text(
-                    item.name.toString(),
+                  child: Directionality(
                     textDirection: TextDirection.rtl,
-                    style: AppStylesUtil.textRegularStyle(
-                        16, Colors.black, FontWeight.normal),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          item.name.toString(),
+                          textDirection: TextDirection.rtl,
+                          style: AppStylesUtil.textRegularStyle(
+                              16, Colors.black, FontWeight.normal),
+                        ),
+                        Visibility(
+                          visible: item.extratext != null? true: false,
+                          child: Text(
+                            item.extratext.toString(),
+                            textDirection: TextDirection.rtl,
+                            style: AppStylesUtil.textRegularStyle(
+                                16, Colors.black, FontWeight.normal),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ))
             .toList(),

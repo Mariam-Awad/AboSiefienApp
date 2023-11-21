@@ -1,10 +1,8 @@
 import 'package:abosiefienapp/cache/app_cache.dart';
+import 'package:abosiefienapp/presentation/screens/add_makhdom/add_makhdom_provider.dart';
 import 'package:abosiefienapp/presentation/screens/auth/login_provider.dart';
-import 'package:abosiefienapp/presentation/screens/history_of_makhdoms/history_of_makhdoms_screen.dart';
-import 'package:abosiefienapp/presentation/screens/home_screen/home_screen.dart';
 import 'package:abosiefienapp/presentation/screens/home_screen/home_screen_provider.dart';
 import 'package:abosiefienapp/presentation/screens/makhdom_details/makhdom_details_provider.dart';
-import 'package:abosiefienapp/presentation/screens/manage_of_makhdoms/manage_of_makhdoms_screen.dart';
 import 'package:abosiefienapp/presentation/screens/my_makhdoms/my_makhdoms_provider.dart';
 import 'package:abosiefienapp/utils/app_routes.dart';
 import 'package:abosiefienapp/utils/route_manager.dart';
@@ -32,6 +30,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (context) => HomeScreenProvider()),
           ChangeNotifierProvider(create: (context) => MyMakhdomsProvider()),
           ChangeNotifierProvider(create: (context) => MakhdomDetailsProvider()),
+          ChangeNotifierProvider(create: (context) => AddMakhdomProvider()),
         ],
         child: ScreenUtilInit(
           designSize: const Size(375, 812),

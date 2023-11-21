@@ -222,42 +222,36 @@ class _MakhdomDetailsScreenState extends State<MakhdomDetailsScreen> {
                               width: 2.0,
                             ),
                           ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                makhdomdetailsprovider
-                                            .recievedMakhdom!.birthdate ==
-                                        null
-                                    ? '2023/11/23'
-                                    : '${makhdomdetailsprovider.convertToDate(makhdomdetailsprovider.recievedMakhdom!.birthdate ?? '')}',
-                                style: AppStylesUtil.textBoldStyle(
-                                  16.sp,
-                                  Colors.black,
-                                  FontWeight.w400,
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () async {
-                                  printWarning(
-                                      'BIRTHDAY ${makhdomdetailsprovider.recievedMakhdom!.birthdate ?? ''}');
-                                  DateTime? selected =
-                                      await customShowDatePicker(context);
+                          child: InkWell(
+                            onTap: () async {
+                              printWarning(
+                                  'OLD BIRTHDAY ${makhdomdetailsprovider.recievedMakhdom!.birthdate ?? ''}');
+                              DateTime? selected =
+                                  await customShowDatePicker(context);
+                              makhdomdetailsprovider.changeBirthdate(selected);
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
                                   makhdomdetailsprovider
-                                          .recievedMakhdom!.birthdate =
-                                      intl.DateFormat('yyyy-MM-dd')
-                                          .format(selected!);
-
-                                  printWarning(
-                                      'BIRTHDAY ${makhdomdetailsprovider.recievedMakhdom!.birthdate ?? ''}');
-                                },
-                                child: Icon(
+                                              .recievedMakhdom!.birthdate ==
+                                          null
+                                      ? '2023/1/1'
+                                      : '${makhdomdetailsprovider.convertToDate(makhdomdetailsprovider.recievedMakhdom!.birthdate ?? '')}',
+                                  style: AppStylesUtil.textBoldStyle(
+                                    16.sp,
+                                    Colors.black,
+                                    FontWeight.w400,
+                                  ),
+                                ),
+                                Icon(
                                   Icons.date_range,
                                   color: Colors.blue,
                                   size: 20.sp,
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                         16.verticalSpace,
@@ -362,7 +356,7 @@ class _MakhdomDetailsScreenState extends State<MakhdomDetailsScreen> {
                             //  controller: nameController,
                             validation: makhdomdetailsprovider.notesController
                                 .isEmpty(),
-                            keyboardType: TextInputType.number,
+                            keyboardType: TextInputType.text,
                             lines: 4,
                             obscure: false,
                             textAlign: TextAlign.start,

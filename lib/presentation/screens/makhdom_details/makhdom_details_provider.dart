@@ -71,6 +71,14 @@ class MakhdomDetailsProvider extends ChangeNotifier {
     String apiDateString = datestring ?? '';
     DateTime apiDate = DateTime.parse(apiDateString);
     String formattedDate = intl.DateFormat('dd/MM/yyyy').format(apiDate);
+    printError('formattedDate $formattedDate');
     return formattedDate;
+  }
+
+  changeBirthdate(DateTime? selected) {
+    recievedMakhdom!.birthdate =
+        intl.DateFormat('yyyy-MM-dd').format(selected!);
+    printWarning('NEW BIRTHDAY ${recievedMakhdom!.birthdate ?? ''}');
+    notifyListeners();
   }
 }

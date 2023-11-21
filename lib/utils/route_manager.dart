@@ -1,4 +1,5 @@
 import 'package:abosiefienapp/model/mymakhdoms_model.dart';
+import 'package:abosiefienapp/presentation/screens/add_makhdom/add_makhdom_screen.dart';
 import 'package:abosiefienapp/presentation/screens/auth/login_screen.dart';
 import 'package:abosiefienapp/presentation/screens/history_of_makhdoms/history_of_makhdoms_screen.dart';
 import 'package:abosiefienapp/presentation/screens/home_screen/home_screen.dart';
@@ -41,6 +42,11 @@ class AppRouteManager {
           builder: (context) => MakhdomDetailsScreen(
             makhdom: args as Data,
           ),
+        );
+      case AppRoutes.addMakhdomRouteName:
+        return MaterialPageRoute(
+          settings: RouteSettings(arguments: args),
+          builder: (context) => const AddMakhdomScreen(),
         );
       default:
         return MaterialPageRoute(

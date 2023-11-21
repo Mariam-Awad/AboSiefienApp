@@ -1,3 +1,4 @@
+import 'package:abosiefienapp/model/khadem_model.dart';
 import 'package:abosiefienapp/model/mymakhdoms_model.dart';
 import 'package:abosiefienapp/model/makhdom_update_model.dart';
 import 'package:abosiefienapp/model/user_model.dart';
@@ -13,6 +14,8 @@ class Parser {
         return MyMakhdomsModel.fromJson(json);
       case MakhdomUpdateModel:
         return MakhdomUpdateModel.fromJson(json);
+      case KhademModel:
+        return KhademModel.fromJson(json);
     }
   }
 }

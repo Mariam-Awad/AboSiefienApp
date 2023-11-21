@@ -32,7 +32,7 @@ class MakdomList extends StatelessWidget {
                   printWarning('makhdomDetails Navigate');
                   Navigator.pushNamed(
                     context,
-                    AppRoutes.makhdomDetailsRouteName,
+                    AppRoutes.addMakhdomRouteName,
                     arguments: makhdom,
                   );
                 },
@@ -68,7 +68,9 @@ class MakdomList extends StatelessWidget {
                                 Text(
                                   makhdom.name ?? "",
                                   textAlign: TextAlign.start,
+                                  overflow: TextOverflow.ellipsis,
                                   textDirection: TextDirection.rtl,
+                                  textScaleFactor: 0.97,
                                   style: AppStylesUtil.textBoldStyle(
                                       17.0, Colors.black, FontWeight.bold),
                                 ),
@@ -125,9 +127,9 @@ class MakdomList extends StatelessWidget {
                                             ),
                                             onPressed: () {
                                               provider.sendWhatsAppMessage(
-                                                  context: context,
-                                                  phone: makhdom.phone!,
-                                                  );
+                                                context: context,
+                                                phone: makhdom.phone!,
+                                              );
                                             },
                                           ),
                                         ],

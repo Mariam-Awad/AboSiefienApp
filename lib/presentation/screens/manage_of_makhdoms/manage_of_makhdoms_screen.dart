@@ -1,4 +1,5 @@
 import 'package:abosiefienapp/presentation/widgets/card_widget.dart';
+import 'package:abosiefienapp/utils/app_routes.dart';
 import 'package:abosiefienapp/utils/app_styles_util.dart';
 import 'package:flutter/material.dart';
 
@@ -23,13 +24,16 @@ class ManageOfMakhdoms extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            CardWidget(
-              'إضافة المخدومين',
-              () {
-                // makhdom.addnew = true;
-                //Navigator.pushNamed(context, MakhdomDetailsScreen.routeName);
-              },
-              Icons.person_add_alt_1,
+            Visibility(
+              // todo add permission
+              visible: true,
+              child: CardWidget(
+                'إضافة المخدومين',
+                () {
+                  Navigator.pushNamed(context, AppRoutes.addMakhdomRouteName);
+                },
+                Icons.person_add_alt_1,
+              ),
             ),
             CardWidget("المخدومين الجدد", () {
               // Navigator.pushNamed(context, NewMakhdomList.routeName);

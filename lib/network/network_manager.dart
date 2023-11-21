@@ -39,7 +39,7 @@ class NetworkManager {
         headers['Authorization'] = "$token";
       }
     }
-/*
+    /*
     var lang = AppCache.instance.getLanguage();
     if (lang != null) {
       headers['Accept-Language'] = lang;

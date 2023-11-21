@@ -46,21 +46,23 @@ class AddMakhdomProvider extends ChangeNotifier {
         "phone": phoneController.text,
         "phone2": phone2Controller.text,
         "birthdate": birthdate,
-        "addNo": addressNumberController.text == '' ? 0 : addressNumberController.text,
+        "addNo": addressNumberController.text == ''
+            ? 0
+            : addressNumberController.text,
         "addStreet": addressStreetController.text,
         "addFloor": 0,
         "addBeside": addressBesideController.text,
         "father": fatherController.text,
         "university": universityController.text,
         "faculty": facultyController.text,
-        "studentYear": levelController.text == ''? 0 : levelController.text,
+        "studentYear": levelController.text == '' ? 0 : levelController.text,
         "khademId": selectedKhadem,
         "groupId": 0,
         "notes": notesController.text,
         "levelId": recievedUserModel!.data!.levelId,
         "genderId": genderValue.value,
         "job": "string",
-        "socialId": 0,
+        "socialId": 1,
         "lastAttendanceDate": "2023-11-21T13:20:39.152Z",
         "lastCallDate": "2023-11-21T13:20:39.152Z"
       });
@@ -69,6 +71,24 @@ class AddMakhdomProvider extends ChangeNotifier {
       customFunctions.showError(
           message: 'برجاء إدخال البيانات المطلوبة', context: context);
     }
+  }
+
+  clearForm() {
+    nameController.text = '';
+    phoneController.text = '';
+    phone2Controller.text = '';
+    birthdate = '';
+    addressNumberController.text = '';
+    addressStreetController.text = '';
+    addressBesideController.text = '';
+    fatherController.text = '';
+    universityController.text = '';
+    facultyController.text = '';
+    levelController.text = '';
+    selectedKhadem = 2;
+    notesController.text = '';
+    genderValue.value = 1;
+    notifyListeners();
   }
 
   changeBirthdate(DateTime? selected) {
@@ -89,10 +109,11 @@ class AddMakhdomProvider extends ChangeNotifier {
       var responseAddMakhdom = await addMakhdomRepo.requestAddMakhdom(body);
       printDone('response $responseAddMakhdom');
       notifyListeners();
-      if (responseAddMakhdom != null && responseAddMakhdom.success == true) {
-        printInfo('Updated Now');
+      if (responseAddMakhdom != null && responseAddMakhdom['success'] == true) {
+        printInfo('Added Now');
         customFunctions.showSuccess(
             message: 'تم الإضافة بنجاح', context: context);
+        clearForm();
         customFunctions.hideProgress();
         notifyListeners();
         return true;

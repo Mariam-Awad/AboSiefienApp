@@ -1,8 +1,10 @@
 import 'package:abosiefienapp/presentation/screens/my_makhdoms/my_makhdoms_provider.dart';
+import 'package:abosiefienapp/utils/app_assets_util.dart';
 import 'package:abosiefienapp/utils/app_debug_prints.dart';
 import 'package:abosiefienapp/utils/app_routes.dart';
 import 'package:abosiefienapp/utils/app_styles_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import '../../model/mymakhdoms_model.dart';
@@ -32,7 +34,7 @@ class MakdomList extends StatelessWidget {
                   printWarning('makhdomDetails Navigate');
                   Navigator.pushNamed(
                     context,
-                    AppRoutes.addMakhdomRouteName,
+                    AppRoutes.makhdomDetailsRouteName,
                     arguments: makhdom,
                   );
                 },
@@ -54,13 +56,20 @@ class MakdomList extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             CircleAvatar(
-                                radius: 30.0,
-                                backgroundColor: const Color(0xFFE3F2FD),
-                                child: Icon(
-                                  Icons.person,
-                                  size: 30.0,
-                                  color: Theme.of(context).primaryColor,
-                                )),
+                              radius: 28.0,
+                              backgroundColor: const Color(0xFFE3F2FD),
+                              child: makhdom.genderId == 1
+                                  ? Image.asset(
+                                      AppAssetsUtil.maleAvatar,
+                                      width: 50.0,
+                                      height: 50.0,
+                                    )
+                                  : Image.asset(
+                                      AppAssetsUtil.femaleAvatar,
+                                      width: 50.0,
+                                      height: 50.0,
+                                    ),
+                            ),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.end,
@@ -141,25 +150,28 @@ class MakdomList extends StatelessWidget {
                             ),
                           ],
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              makhdom.lastAttendanceDate == null
-                                  ? 'اخر حضور: لا يوجد'
-                                  : 'اخر حضور: ${provider.convertToDate(makhdom.lastAttendanceDate ?? '')}',
-                              style: AppStylesUtil.textRegularStyle(
-                                  12, Colors.green, FontWeight.bold),
-                            ),
-                            // const SizedBox(
-                            //   width: 35.0,
-                            // ),
-                            // Text(
-                            //   'اخر إفتقاد: ${makhdom.lastCallDate ?? 'لا يوجد'}',
-                            //   style: AppStylesUtil.textRegularStyle(
-                            //       12, Colors.red, FontWeight.bold),
-                            // ),
-                          ],
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 16.w),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                '${makhdom.id ?? 'لا يوجد'}',
+                                style: AppStylesUtil.textRegularStyle(
+                                    12, Colors.blue, FontWeight.bold),
+                              ),
+                              Text(
+                                makhdom.lastAttendanceDate == null
+                                    ? 'اخر حضور: لا يوجد'
+                                    : 'اخر حضور: ${provider.convertToDate(makhdom.lastAttendanceDate ?? '')}',
+                                style: AppStylesUtil.textRegularStyle(
+                                    12, Colors.green, FontWeight.bold),
+                              ),
+                              // const SizedBox(
+                              //   width: 35.0,
+                              // ),
+                            ],
+                          ),
                         ),
                       ],
                     ),

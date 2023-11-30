@@ -63,14 +63,13 @@ class CustomDropdownWidget extends StatelessWidget {
                           style: AppStylesUtil.textRegularStyle(
                               16, Colors.black, FontWeight.normal),
                         ),
-                        Visibility(
-                          visible: item.extratext != null? true: false,
-                          child: Text(
-                            item.extratext.toString(),
-                            textDirection: TextDirection.rtl,
-                            style: AppStylesUtil.textRegularStyle(
-                                16, Colors.black, FontWeight.normal),
-                          ),
+                        Text(
+                          item.extratext != null
+                              ? item.extratext.toString()
+                              : '',
+                          textDirection: TextDirection.rtl,
+                          style: AppStylesUtil.textRegularStyle(
+                              16, Colors.black, FontWeight.normal),
                         ),
                       ],
                     ),

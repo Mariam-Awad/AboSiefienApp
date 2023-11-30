@@ -18,10 +18,9 @@ class MyMakhdomsScreen extends StatefulWidget {
 }
 
 class _MyMakhdomsScreenState extends State<MyMakhdomsScreen> {
-
   @override
   void deactivate() {
-     Provider.of<MyMakhdomsProvider>(context, listen: false).clearFilterDate();
+    Provider.of<MyMakhdomsProvider>(context, listen: false).clearFilterDate();
     super.deactivate();
   }
 
@@ -69,6 +68,7 @@ class _MyMakhdomsScreenState extends State<MyMakhdomsScreen> {
                     children: [
                       SearchSectionWidget(
                         provider: mymakhdomsprovider,
+                        filtervisibility: true,
                       ),
                       Expanded(
                         child: Container(

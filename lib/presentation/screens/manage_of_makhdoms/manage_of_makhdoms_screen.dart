@@ -35,23 +35,23 @@ class ManageOfMakhdoms extends StatelessWidget {
                 Icons.person_add_alt_1,
               ),
             ),
-            CardWidget("المخدومين الجدد", () {
-              // Navigator.pushNamed(context, NewMakhdomList.routeName);
-            }, Icons.list_alt),
-            CardWidget(
-              "إضافة حضور ب (الكود)",
-              () {
-                //Navigator.pushNamed(context, AddAttendanceByCode.routeName);
-              },
-              Icons.edit_location_outlined,
-            ),
-            CardWidget(
-              "إضافة حضور ب (الاسم)",
-              () {
-                //Navigator.pushNamed(context, AddAttendance.routeName);
-              },
-              Icons.edit_location_outlined,
-            ),
+            // CardWidget("المخدومين الجدد", () {
+            //   // Navigator.pushNamed(context, NewMakhdomList.routeName);
+            // }, Icons.list_alt),
+            // CardWidget(
+            //   "إضافة حضور ب (الكود)",
+            //   () {
+            //     //Navigator.pushNamed(context, AddAttendanceByCode.routeName);
+            //   },
+            //   Icons.edit_location_outlined,
+            // ),
+            // CardWidget(
+            //   "إضافة حضور ب (الاسم)",
+            //   () {
+            //     //Navigator.pushNamed(context, AddAttendance.routeName);
+            //   },
+            //   Icons.edit_location_outlined,
+            // ),
           ],
         ),
       ),

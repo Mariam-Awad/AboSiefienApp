@@ -2,7 +2,6 @@ import 'package:abosiefienapp/presentation/screens/makhdom_details/makhdom_detai
 import 'package:abosiefienapp/presentation/screens/my_makhdoms/my_makhdoms_provider.dart';
 import 'package:abosiefienapp/presentation/widgets/app_date_picker_widget.dart';
 import 'package:abosiefienapp/presentation/widgets/arrange_section_widget.dart';
-import 'package:abosiefienapp/presentation/widgets/gender.dart';
 import 'package:abosiefienapp/presentation/widgets/multi_radio_widget.dart';
 import 'package:abosiefienapp/utils/app_debug_prints.dart';
 import 'package:abosiefienapp/utils/app_styles_util.dart';
@@ -61,7 +60,7 @@ class FilterBottomSheetWidget extends StatelessWidget {
                     title5: '',
                     color: Colors.black,
                     onChanged: (value) {
-                      MyMakhdomsProvider.setSelectedSortColumn(value ?? 1);
+                      MyMakhdomsProvider.setSelectedSortColumn(value);
                       printDone(
                           'SORT COLUMN Updated ${MyMakhdomsProvider.sortCoulmn}');
                     }),

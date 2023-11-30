@@ -34,8 +34,8 @@ class MyMakhdomsProvider extends ChangeNotifier {
 
   void clearFilterDate() {
     absentDate = '';
-    sortCoulmn = 1;
-    sortDirection = 1;
+    //sortCoulmn = 1;
+    //sortDirection = 1;  
     notifyListeners();
   }
 

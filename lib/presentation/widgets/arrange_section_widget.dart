@@ -1,4 +1,5 @@
 import 'package:abosiefienapp/model/default_model.dart';
+import 'package:abosiefienapp/model/dropdown_model.dart';
 import 'package:abosiefienapp/presentation/screens/my_makhdoms/my_makhdoms_provider.dart';
 import 'package:abosiefienapp/presentation/widgets/custom_container_widget.dart';
 import 'package:abosiefienapp/presentation/widgets/custom_dropdown_widget.dart';
@@ -26,8 +27,8 @@ class ArrangeSectionWidget extends StatelessWidget {
                   child: CustomDropdownWidget(
                     hintText: 'رتب حسب',
                     items: [
-                      DefaultModel(id: 1, name: 'تصاعدى'),
-                      DefaultModel(id: 2, name: 'تنازلى'),
+                      DropdownModel(id: 1, name: 'تصاعدى'),
+                      DropdownModel(id: 2, name: 'تنازلى'),
                     ],
                     value: MyMakhdomsProvider.sortDirection,
                     onChanged: (val) {

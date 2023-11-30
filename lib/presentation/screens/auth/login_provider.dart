@@ -4,10 +4,12 @@ import 'package:abosiefienapp/repositories/login_repo.dart';
 import 'package:abosiefienapp/shared/custom_function.dart';
 import 'package:abosiefienapp/utils/app_debug_prints.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class LoginProvider extends ChangeNotifier {
   LoginRepo loginRepo = LoginRepo();
   CustomFunctions customFunctions = CustomFunctions();
+  String version = '';
 
   Future<bool> login(
       String username, String password, BuildContext context) async {
@@ -28,7 +30,8 @@ class LoginProvider extends ChangeNotifier {
         }
       } catch (error) {
         printError(error);
-        customFunctions.showError(message: response.errorMsg!, context: context);
+        customFunctions.showError(
+            message: response.errorMsg!, context: context);
         customFunctions.hideProgress();
         notifyListeners();
         return false;
@@ -37,5 +40,13 @@ class LoginProvider extends ChangeNotifier {
     customFunctions.hideProgress();
     notifyListeners();
     return false;
+  }
+
+  getAPKVersion() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    String version = packageInfo.version;
+    String buildNumber = packageInfo.buildNumber;
+    printWarning('version $version');
+    printWarning('buildNumber $buildNumber');
   }
 }

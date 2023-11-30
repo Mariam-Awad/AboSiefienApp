@@ -1,4 +1,5 @@
 import 'package:abosiefienapp/model/mymakhdoms_model.dart';
+import 'package:abosiefienapp/presentation/screens/add_attendance/add_attendance_screen.dart';
 import 'package:abosiefienapp/presentation/screens/add_makhdom/add_makhdom_screen.dart';
 import 'package:abosiefienapp/presentation/screens/auth/login_screen.dart';
 import 'package:abosiefienapp/presentation/screens/history_of_makhdoms/history_of_makhdoms_screen.dart';
@@ -8,7 +9,6 @@ import 'package:abosiefienapp/presentation/screens/manage_of_makhdoms/manage_of_
 import 'package:abosiefienapp/presentation/screens/my_makhdoms/my_makhdoms_screen.dart';
 import 'package:abosiefienapp/utils/app_debug_prints.dart';
 import 'package:abosiefienapp/utils/app_routes.dart';
-import 'package:abosiefienapp/utils/app_styles_util.dart';
 import 'package:flutter/material.dart';
 
 class AppRouteManager {
@@ -47,6 +47,11 @@ class AppRouteManager {
         return MaterialPageRoute(
           settings: RouteSettings(arguments: args),
           builder: (context) => const AddMakhdomScreen(),
+        );
+      case AppRoutes.addAttendanceRouteName:
+        return MaterialPageRoute(
+          settings: RouteSettings(arguments: args),
+          builder: (context) => const AddAttendanceScreen(),
         );
       default:
         return MaterialPageRoute(

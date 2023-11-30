@@ -8,6 +8,6 @@ class DropdownModel {
   DropdownModel.fromJson(dynamic json) {
     id = json['id'];
     name = json['name'];
-    extratext = json['extratext'];
+    extratext = json['extratext'] ?? '';
   }
 }

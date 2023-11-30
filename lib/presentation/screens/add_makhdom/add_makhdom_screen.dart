@@ -29,7 +29,7 @@ class _AddMakhdomScreenState extends State<AddMakhdomScreen> {
   }
 
   callGetKhademApi() async {
-    Future.delayed(Duration.zero, () {
+    Future.delayed(Duration.zero, () {  
       Provider.of<AddMakhdomProvider>(context, listen: false)
           .getkhadem(context)
           .then((value) {
@@ -64,7 +64,6 @@ class _AddMakhdomScreenState extends State<AddMakhdomScreen> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width - 40,
                     child: CustomDropdownWidget(
-                      hintText: 'اختر الخادم',
                       labelText: 'اختر الخادم',
                       items: addMakhdomProvider.dropdownList,
                       value: addMakhdomProvider.selectedKhadem,

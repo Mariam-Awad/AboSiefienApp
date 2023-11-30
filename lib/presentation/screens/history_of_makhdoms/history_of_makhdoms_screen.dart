@@ -27,13 +27,13 @@ class HistoryOfMakhdomsScreen extends StatelessWidget {
               },
               Icons.person_search,
             ),
-            // CardWidget(
-            //   "سجل الغياب",
-            //   () {
-            //     // Navigator.pushNamed(context, KhademAbsent.routeName);
-            //   },
-            //   Icons.person_add_disabled,
-            // )
+            CardWidget(
+              "إضافة حضور",
+              () {
+                Navigator.pushNamed(context, AppRoutes.addAttendanceRouteName);
+              },
+              Icons.edit,
+            ),
           ],
         ),
       ),

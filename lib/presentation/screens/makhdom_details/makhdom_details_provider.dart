@@ -44,8 +44,7 @@ class MakhdomDetailsProvider extends ChangeNotifier {
       if (responseUpdateMyMakhdom != null &&
           responseUpdateMyMakhdom.success == true) {
         printInfo('Updated Now');
-        customFunctions.showSuccess(
-            message: 'تم التعديل بنجاح', context: context);
+        customFunctions.showSuccess(message: 'تم التعديل بنجاح', context: context);
         Navigator.pushNamed(context, AppRoutes.myMakhdomsRouteName);
         customFunctions.hideProgress();
         notifyListeners();

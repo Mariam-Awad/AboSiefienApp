@@ -67,6 +67,27 @@ class _MakhdomDetailsScreenState extends State<MakhdomDetailsScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 20.w),
+                          child: Row(
+                            // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text(
+                                'كود المخـدوم :   ',
+                                style: AppStylesUtil.textRegularStyle(
+                                    16, Colors.black, FontWeight.w500),
+                              ),
+                              Text(
+                                makhdomdetailsprovider.recievedMakhdom!.id != 0
+                                    ? makhdomdetailsprovider.recievedMakhdom!.id
+                                        .toString()
+                                    : 'لا يوجد',
+                                style: AppStylesUtil.textRegularStyle(
+                                    16, Colors.black, FontWeight.w500),
+                              ),
+                            ],
+                          ),
+                        ),
                         InputFieldWidget(
                           labeltext: 'الإسم',
                           initialvalue:

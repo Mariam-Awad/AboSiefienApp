@@ -36,6 +36,7 @@ class _MultiRadioWidgetState extends State<MultiRadioWidget> {
   @override
   Widget build(BuildContext context) {
     int _value = widget.radioValue.value;
+    printWarning('_value $_value');
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Column(

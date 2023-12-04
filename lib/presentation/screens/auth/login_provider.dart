@@ -44,9 +44,8 @@ class LoginProvider extends ChangeNotifier {
 
   getAPKVersion() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    String version = packageInfo.version;
-    String buildNumber = packageInfo.buildNumber;
+    version = packageInfo.version;
     printWarning('version $version');
-    printWarning('buildNumber $buildNumber');
+    notifyListeners();
   }
 }

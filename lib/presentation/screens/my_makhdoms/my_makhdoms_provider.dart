@@ -35,7 +35,7 @@ class MyMakhdomsProvider extends ChangeNotifier {
   void clearFilterDate() {
     absentDate = '';
     //sortCoulmn = 1;
-    //sortDirection = 1;  
+    //sortDirection = 1;
     notifyListeners();
   }
 
@@ -55,14 +55,6 @@ class MyMakhdomsProvider extends ChangeNotifier {
     printWarning('absentDate $absentDate');
     try {
       customFunctions.showProgress(context);
-      // MyMakhdomsModel? storedmodel = AppCache.instance.getMyMakhdomsModel();
-      // if (storedmodel != null && storedmodel.data != null) {
-      //   allMakhdoms = storedmodel.data!;
-      //   listLength = storedmodel.data!.length;
-      //   customFunctions.hideProgress();
-      //   notifyListeners();
-      //   return true;
-      // } else {
       MyMakhdomsModel? responseMyMakhdoms = await myMakhdomsRepo
           .requestMyMakhdoms(sortCoulmn, sortDirection, absentDate);
       printDone('response $responseMyMakhdoms');
@@ -80,7 +72,6 @@ class MyMakhdomsProvider extends ChangeNotifier {
         notifyListeners();
         return true;
       }
-      //  }
     } catch (error) {
       printError(error);
       customFunctions.showError(message: errorMsg, context: context);

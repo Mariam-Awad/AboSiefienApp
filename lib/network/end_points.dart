@@ -6,4 +6,5 @@ class Endpoints {
   static const REQUEST_UPDATE_MAKHDOM = "$TEST_BASE_URL/makhdom";
   static const REQUEST_ADD_MAKHDOM = "$TEST_BASE_URL/makhdom";
   static const REQUEST_GET_KHADEM = "$TEST_BASE_URL/khadem";
+  static const REQUEST_ADD_ATTENDANCE = "$TEST_BASE_URL/attendance";
 }

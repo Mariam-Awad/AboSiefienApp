@@ -44,6 +44,22 @@ class _MyMakhdomsScreenState extends State<MyMakhdomsScreen> {
     return Consumer<MyMakhdomsProvider>(
         builder: (context, mymakhdomsprovider, child) {
       return Scaffold(
+          bottomNavigationBar: Card(
+            elevation: 10,
+            shadowColor: Colors.grey,
+            margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            child: Container(
+              height: 40,
+              width: double.infinity,
+              padding: const EdgeInsets.all(5),
+              child: Text(
+                "إجمالى العدد : ${mymakhdomsprovider.allMakhdoms.length}", //provider.allMakhdoms?.length
+                style: AppStylesUtil.textRegularStyle(
+                    20.0, Colors.black, FontWeight.w500),
+                textAlign: TextAlign.end,
+              ),
+            ),
+          ),
           appBar: AppBar(
             title: Text(
               "سجل المخدومين",
@@ -87,22 +103,6 @@ class _MyMakhdomsScreenState extends State<MyMakhdomsScreen> {
                           ),
                         ),
                       ),
-                      Card(
-                        elevation: 5,
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 5),
-                        child: Container(
-                          height: 40,
-                          width: double.infinity,
-                          padding: const EdgeInsets.all(5),
-                          child: Text(
-                            "إجمالى العدد : ${mymakhdomsprovider.allMakhdoms.length}", //provider.allMakhdoms?.length
-                            style: AppStylesUtil.textRegularStyle(
-                                20.0, Colors.black, FontWeight.w500),
-                            textAlign: TextAlign.end,
-                          ),
-                        ),
-                      )
                     ],
                   ),
                 ));

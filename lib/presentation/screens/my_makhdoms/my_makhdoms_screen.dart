@@ -64,7 +64,7 @@ class _MyMakhdomsScreenState extends State<MyMakhdomsScreen> {
             title: Text(
               "سجل المخدومين",
               style: AppStylesUtil.textRegularStyle(
-                  20.0, Colors.white, FontWeight.w500),
+                  20.0, Colors.black, FontWeight.w500),
             ),
             actions: [
               IconButton(

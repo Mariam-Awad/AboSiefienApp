@@ -7,6 +7,9 @@ class HomeScreenProvider extends ChangeNotifier {
   List<String> permisions = [];
   bool hasGetMakhdomsPermission = false;
   bool hasManageMakhdomsPermission = false;
+  bool hasaddclassattendancePermission = false;
+  bool hasaaddattendancePermission = false;
+  bool hasaaddMakhdomPermission = false;
 
   void getStoredUser() {
     user = AppCache.instance.getUserModel();
@@ -22,8 +25,20 @@ class HomeScreenProvider extends ChangeNotifier {
           hasGetMakhdomsPermission = true;
           notifyListeners();
         } else if (user!.data!.permissions![i].permissionName.toString() ==
-            'managemakhdoms') {
+            'manage_makhdom') {
           hasManageMakhdomsPermission = true;
+          notifyListeners();
+        } else if (user!.data!.permissions![i].permissionName.toString() ==
+            'add_classattendance') {
+          hasaddclassattendancePermission = true;
+          notifyListeners();
+        } else if (user!.data!.permissions![i].permissionName.toString() ==
+            'add_attendance') {
+          hasaaddattendancePermission = true;
+          notifyListeners();
+        } else if (user!.data!.permissions![i].permissionName.toString() ==
+            'add_makhdom') {
+          hasaaddMakhdomPermission = true;
           notifyListeners();
         }
         permisions.add(user!.data!.permissions![i].permissionName.toString());

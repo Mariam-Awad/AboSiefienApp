@@ -51,7 +51,7 @@ class _MakhdomDetailsScreenState extends State<MakhdomDetailsScreen> {
           title: Text(
             "بيانات المخدوم",
             style: AppStylesUtil.textRegularStyle(
-                20.0, Colors.white, FontWeight.w500),
+                20.0, Colors.black, FontWeight.w500),
           ),
         ),
         body: makhdomdetailsprovider == null
@@ -348,19 +348,20 @@ class _MakhdomDetailsScreenState extends State<MakhdomDetailsScreen> {
                         InputFieldWidget(
                             labeltext: 'السنة الدراسية',
                             initialvalue: makhdomdetailsprovider
-                                    .recievedMakhdom!.levelId
+                                    .recievedMakhdom!.studentYear
                                     .toString() ??
                                 '',
                             width: MediaQuery.of(context).size.width - 40,
                             //  controller: nameController,
-                            validation: makhdomdetailsprovider.levelController
+                            validation: makhdomdetailsprovider
+                                .studentYearController
                                 .isEmpty(),
                             keyboardType: TextInputType.number,
                             lines: 1,
                             obscure: false,
                             textAlign: TextAlign.start,
                             onChanged: (value) {
-                              makhdomdetailsprovider.recievedMakhdom!.levelId =
+                              makhdomdetailsprovider.recievedMakhdom!.studentYear =
                                   int.parse(value) ?? 0;
                               // _makhdomData['studentYear'] = value ?? '';
                             }),

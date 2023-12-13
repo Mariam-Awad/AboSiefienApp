@@ -1,4 +1,4 @@
-import 'package:abosiefienapp/presentation/screens/add_attendance/add_attendance_provider.dart';
+import 'package:abosiefienapp/presentation/screens/add_class_attendance/add_class_attendance_provider.dart';
 import 'package:abosiefienapp/presentation/screens/my_makhdoms/my_makhdoms_provider.dart';
 import 'package:abosiefienapp/presentation/widgets/filter_bottom_sheet_widget.dart';
 import 'package:abosiefienapp/utils/app_styles_util.dart';
@@ -7,7 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SearchSectionWidget extends StatelessWidget {
   final MyMakhdomsProvider? provider;
-  final AddAttendanceProvider? attendanceProvider;
+  final AddClassAttendanceProvider? attendanceProvider;
   final bool filtervisibility;
   final void Function()? searchonTap;
 

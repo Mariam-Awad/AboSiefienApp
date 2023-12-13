@@ -39,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 "برنامج المخدومين",
                 textDirection: TextDirection.rtl,
                 style: AppStylesUtil.textBoldStyle(
-                    22, Colors.white, FontWeight.w500),
+                    22, Colors.black, FontWeight.w500),
               ),
               // automaticallyImplyLeading: false,
               actions: [

@@ -42,7 +42,8 @@ extension Validator on TextEditingController {
   }
 
   bool isEmpty() {
-    return this == null || this.text == null || this.text.isEmpty;
+    if (this == null || this.text.isEmpty || this.text == null) return false;
+    return true;
   }
 
   bool trimmedAndStillEmpty() {

@@ -54,7 +54,7 @@ class InputFieldWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: width,
-      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+      margin: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
       padding: EdgeInsets.symmetric(vertical: 16),
       child: Directionality(
         textDirection: TextDirection.rtl,

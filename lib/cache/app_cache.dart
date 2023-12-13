@@ -19,6 +19,8 @@ class AppCache {
   static final String _KEY_USER = "user";
   static final String _KEY_MYMAKHDOMS = "mymakhdoms";
   static final String _KEY_khadem = "khadem";
+  static final String _KEY_LOCAL_ATTENDANCE_MAKHDOM_LIST =
+      "localattendancemakhdomlist";
 
   AppCache._private();
 
@@ -40,6 +42,10 @@ class AppCache {
   void removeToken() {
     _prefs!.remove(_KEY_TOKEN);
     _prefs!.clear();
+  }
+
+    void removeAllLocalAttendanceMakhdoms() {
+    _prefs!.remove(_KEY_LOCAL_ATTENDANCE_MAKHDOM_LIST);
   }
 
   void setUserModel(UserModel model) async {
@@ -74,5 +80,16 @@ class AppCache {
   KhademModel? getKhademModel() {
     String? json = _prefs!.getString(_KEY_khadem);
     return json == null ? null : KhademModel.fromJson(jsonDecode(json));
+  }
+
+  void setAttendanceMakhdomList(List locallist) async {
+    if (locallist == []) return;
+    String json = jsonEncode(locallist);
+    await _prefs!.setString(_KEY_LOCAL_ATTENDANCE_MAKHDOM_LIST, json);
+  }
+
+  List? getsetAttendanceMakhdomList() {
+    String? json = _prefs!.getString(_KEY_LOCAL_ATTENDANCE_MAKHDOM_LIST);
+    return json == null ? null : jsonDecode(json);
   }
 }

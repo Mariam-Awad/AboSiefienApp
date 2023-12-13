@@ -1,5 +1,6 @@
 import 'package:abosiefienapp/cache/app_cache.dart';
 import 'package:abosiefienapp/presentation/screens/add_attendance/add_attendance_provider.dart';
+import 'package:abosiefienapp/presentation/screens/add_class_attendance/add_class_attendance_provider.dart';
 import 'package:abosiefienapp/presentation/screens/add_makhdom/add_makhdom_provider.dart';
 import 'package:abosiefienapp/presentation/screens/auth/login_provider.dart';
 import 'package:abosiefienapp/presentation/screens/home_screen/home_screen_provider.dart';
@@ -32,6 +33,8 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (context) => MyMakhdomsProvider()),
           ChangeNotifierProvider(create: (context) => MakhdomDetailsProvider()),
           ChangeNotifierProvider(create: (context) => AddMakhdomProvider()),
+          ChangeNotifierProvider(
+              create: (context) => AddClassAttendanceProvider()),
           ChangeNotifierProvider(create: (context) => AddAttendanceProvider()),
         ],
         child: ScreenUtilInit(

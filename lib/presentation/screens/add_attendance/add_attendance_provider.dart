@@ -1,102 +1,36 @@
 import 'package:abosiefienapp/cache/app_cache.dart';
-import 'package:abosiefienapp/model/attendance_settings.dart';
-import 'package:abosiefienapp/model/mymakhdoms_model.dart';
-import 'package:abosiefienapp/repositories/add_attendance_repo.dart';
-import 'package:abosiefienapp/repositories/my_makhdoms_repo.dart';
+import 'package:abosiefienapp/repositories/add_class_attendance_repo.dart';
 import 'package:abosiefienapp/shared/custom_function.dart';
 import 'package:abosiefienapp/utils/app_debug_prints.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' as intl;
 
 class AddAttendanceProvider extends ChangeNotifier {
-  MyMakhdomsRepo myMakhdomsRepo = MyMakhdomsRepo();
-  AddAttendanceRepo addAttendanceRepo = AddAttendanceRepo();
-
+  AddClassAttendanceRepo addClassAttendanceRepo = AddClassAttendanceRepo();
   CustomFunctions customFunctions = CustomFunctions();
 
-  //Sort and Filter
-  TextEditingController searchController = TextEditingController();
-  List<Data> items = [];
-  int sortCoulmn = 1;
-  int sortDirection = 1;
-  String absentDate = '';
+  String errorMsg = '';
 
-  int listLength = 0;
-  List<Data> allMakhdoms = [];
-  String errorMsg = 'حدث خطأ ما برجاء المحاولة مرة اّخرى';
-  List<AttendanceSetting> makhdomsAttendance = [];
-  List finalList = [];
+  final GlobalKey<FormState> attendanceformKey = GlobalKey();
+  TextEditingController pointsController = TextEditingController();
+  TextEditingController codeController = TextEditingController();
+  String attendanceDate = '';
 
-  Future<bool> myMakhdoms(BuildContext context) async {
-    convertToDate();
-    printWarning('sortCoulmn $sortCoulmn');
-    printWarning('sortDirection $sortDirection');
-    printWarning('absentDate $absentDate');
-    try {
-      customFunctions.showProgress(context);
-      MyMakhdomsModel? responseMyMakhdoms = await myMakhdomsRepo
-          .requestMyMakhdoms(sortCoulmn, sortDirection, absentDate);
-      printDone('response $responseMyMakhdoms');
-      notifyListeners();
-      if (responseMyMakhdoms != null &&
-          responseMyMakhdoms.data != null &&
-          responseMyMakhdoms.success == true) {
-        listLength = responseMyMakhdoms.data!.length;
-        allMakhdoms = responseMyMakhdoms.data!;
-        items = allMakhdoms;
-        fillMakhdomsAttendance();
-        errorMsg = responseMyMakhdoms.errorMsg!;
-        customFunctions.hideProgress();
-        notifyListeners();
-        return true;
-      }
-    } catch (error) {
-      printError(error);
-      customFunctions.showError(message: errorMsg, context: context);
-      customFunctions.hideProgress();
-      notifyListeners();
-      return false;
+  List localAttendanceMakhdoms = [];
+
+  validate(BuildContext context) {
+    if (attendanceformKey.currentState!.validate() && attendanceDate != '') {
+      printWarning('Code Is: ${int.parse(codeController.text)}');
+      addMakhdom(int.parse(codeController.text));
+    } else {
+      printError('Not Validated');
+      customFunctions.showError(
+          message: 'برجاء إدخال البيانات المطلوبة', context: context);
     }
-    customFunctions.hideProgress();
-    customFunctions.showError(
-        message: 'حدث خطأ ما برجاء المحاولة مرة اّخرى', context: context);
-    notifyListeners();
-    return false;
   }
 
-  fillMakhdomsAttendance() {
-    makhdomsAttendance = [];
-    notifyListeners();
-    for (int i = 0; i < items.length; i++) {
-      makhdomsAttendance
-          .add(AttendanceSetting(value: false, makhdomId: items[i].id!));
-      notifyListeners();
-      printWarning('obj in makhdomsAttendance ${makhdomsAttendance[i].value}');
-    }
-    printError('LENGTH ${items.length}');
-    notifyListeners();
-  }
-
-  rePareListToSend() {
-    for (int i = 0; i < makhdomsAttendance.length; i++) {
-      if (makhdomsAttendance[i].value == true) {
-        finalList.add(makhdomsAttendance[i].makhdomId);
-      }
-      notifyListeners();
-    }
-    printDone('Final List $finalList');
-  }
-
-  changeSwitchValue(int index, bool newVal) {
-    makhdomsAttendance[index].value = newVal;
-    notifyListeners();
-  }
-
-  void filterSearchResults(String query) {
-    items = allMakhdoms
-        .where((item) => item.name!.toLowerCase().contains(query.toLowerCase()))
-        .toList();
+  void setSelectedAttendanceDate(String? value) {
+    attendanceDate = value!;
     notifyListeners();
   }
 
@@ -105,22 +39,42 @@ class AddAttendanceProvider extends ChangeNotifier {
     String finalFormatedDate =
         intl.DateFormat('yyyy-MM-dd').format(dayToday).toString();
     printDone('finalFormatedDate $finalFormatedDate');
-    absentDate = finalFormatedDate;
+    attendanceDate = finalFormatedDate;
     notifyListeners();
   }
 
-  clearSearchController() {
-    searchController.text = '';
+  addMakhdom(int code) {
+    localAttendanceMakhdoms.add(code);
+    notifyListeners();
+    AppCache.instance.setAttendanceMakhdomList(localAttendanceMakhdoms);
+  }
+
+  removeMakhdom(int code) {
+    printWarning('IN Removw');
+    for (int i = 0; i < localAttendanceMakhdoms.length; i++) {
+      if (localAttendanceMakhdoms[i] == code) {
+        localAttendanceMakhdoms.remove(localAttendanceMakhdoms[i]);
+        notifyListeners();
+        AppCache.instance.setAttendanceMakhdomList(localAttendanceMakhdoms);
+      }
+    }
+  }
+
+  removeAllList() {
+    localAttendanceMakhdoms = [];
+    AppCache.instance.removeAllLocalAttendanceMakhdoms();
     notifyListeners();
   }
 
   Future<bool> addAttendance(BuildContext context) async {
     convertToDate();
-    rePareListToSend();
     try {
       customFunctions.showProgress(context);
-      var response = await addAttendanceRepo.requestAddAttendance(
-          {"attendanceDate": absentDate, "makhdomsId": finalList, "points": 0});
+      var response = await addClassAttendanceRepo.requestAddAttendance({
+        "attendanceDate": attendanceDate,
+        "makhdomsId": localAttendanceMakhdoms,
+        "points": 0
+      });
       printDone('response $response');
       notifyListeners();
       if (response != null && response['success'] == true) {
@@ -128,13 +82,19 @@ class AddAttendanceProvider extends ChangeNotifier {
         customFunctions.showSuccess(
             message: response['data'], context: context);
         customFunctions.hideProgress();
-        // makhdomsAttendance = [];
         notifyListeners();
         return true;
+      } else if (response != null && response['success'] == false) {
+        customFunctions.showError(
+            message: response["errorMsg"].toString(), context: context);
+        customFunctions.hideProgress();
+        notifyListeners();
+        return false;
       }
     } catch (error) {
       printError(error);
-      customFunctions.showError(message: errorMsg, context: context);
+      customFunctions.showError(
+          message: 'حدث خطأ ما برجاء المحاولة مرة اخري', context: context);
       customFunctions.hideProgress();
       notifyListeners();
       return false;

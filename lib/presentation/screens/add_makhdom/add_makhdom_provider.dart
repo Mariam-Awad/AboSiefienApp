@@ -24,7 +24,7 @@ class AddMakhdomProvider extends ChangeNotifier {
   TextEditingController fatherController = TextEditingController();
   TextEditingController universityController = TextEditingController();
   TextEditingController facultyController = TextEditingController();
-  TextEditingController levelController = TextEditingController();
+  TextEditingController studentYearController = TextEditingController();
   TextEditingController notesController = TextEditingController();
   RadioButtonModel genderValue = RadioButtonModel(1, true);
   String? birthdate;
@@ -55,7 +55,8 @@ class AddMakhdomProvider extends ChangeNotifier {
         "father": fatherController.text,
         "university": universityController.text,
         "faculty": facultyController.text,
-        "studentYear": levelController.text == '' ? 0 : levelController.text,
+        "studentYear":
+            studentYearController.text == '' ? 0 : studentYearController.text,
         "khademId": selectedKhadem,
         "groupId": 0,
         "notes": notesController.text,
@@ -84,7 +85,7 @@ class AddMakhdomProvider extends ChangeNotifier {
     fatherController.text = '';
     universityController.text = '';
     facultyController.text = '';
-    levelController.text = '';
+    studentYearController.text = '';
     selectedKhadem = 2;
     notesController.text = '';
     genderValue.value = 1;

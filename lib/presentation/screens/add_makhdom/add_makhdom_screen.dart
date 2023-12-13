@@ -29,7 +29,7 @@ class _AddMakhdomScreenState extends State<AddMakhdomScreen> {
   }
 
   callGetKhademApi() async {
-    Future.delayed(Duration.zero, () {  
+    Future.delayed(Duration.zero, () {
       Provider.of<AddMakhdomProvider>(context, listen: false)
           .getkhadem(context)
           .then((value) {
@@ -47,7 +47,7 @@ class _AddMakhdomScreenState extends State<AddMakhdomScreen> {
           title: Text(
             "بيانات المخدوم",
             style: AppStylesUtil.textRegularStyle(
-                20.0, Colors.white, FontWeight.w500),
+                20.0, Colors.black, FontWeight.w500),
           ),
         ),
         body: Form(
@@ -273,7 +273,7 @@ class _AddMakhdomScreenState extends State<AddMakhdomScreen> {
                   InputFieldWidget(
                       labeltext: 'السنة الدراسية',
                       width: MediaQuery.of(context).size.width - 40,
-                      controller: addMakhdomProvider.levelController,
+                      controller: addMakhdomProvider.studentYearController,
                       //validation: addMakhdomProvider.levelController.isEmpty(),
                       keyboardType: TextInputType.number,
                       lines: 1,
@@ -329,7 +329,7 @@ class _AddMakhdomScreenState extends State<AddMakhdomScreen> {
                       printDone(addMakhdomProvider.facultyController.text);
                       printDone(addMakhdomProvider.universityController.text);
                       printDone(addMakhdomProvider.facultyController.text);
-                      printDone(addMakhdomProvider.levelController.text);
+                      printDone(addMakhdomProvider.studentYearController.text);
                       printDone(addMakhdomProvider.notesController.text);
                       addMakhdomProvider.validate(context);
                     },

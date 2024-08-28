@@ -1,16 +1,16 @@
+import 'package:abosiefienapp/Providers/makhdom_details_provider.dart';
+import 'package:abosiefienapp/Providers/my_makhdoms_provider.dart';
+import 'package:abosiefienapp/core/utils/validator.dart';
 import 'package:abosiefienapp/model/mymakhdoms_model.dart';
-import 'package:abosiefienapp/presentation/screens/makhdom_details/makhdom_details_provider.dart';
-import 'package:abosiefienapp/presentation/screens/my_makhdoms/my_makhdoms_provider.dart';
 import 'package:abosiefienapp/presentation/widgets/app_date_picker_widget.dart';
 import 'package:abosiefienapp/presentation/widgets/gender.dart';
 import 'package:abosiefienapp/presentation/widgets/input_form_fields.dart';
-import 'package:abosiefienapp/utils/app_debug_prints.dart';
-import 'package:abosiefienapp/utils/app_styles_util.dart';
-import 'package:abosiefienapp/utils/validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:intl/intl.dart' as intl;
+
+import '../../../core/theming/app_styles_util.dart';
+import '../../../core/utils/app_debug_prints.dart';
 
 class MakhdomDetailsScreen extends StatefulWidget {
   final Data? makhdom;
@@ -361,8 +361,8 @@ class _MakhdomDetailsScreenState extends State<MakhdomDetailsScreen> {
                             obscure: false,
                             textAlign: TextAlign.start,
                             onChanged: (value) {
-                              makhdomdetailsprovider.recievedMakhdom!.studentYear =
-                                  int.parse(value) ?? 0;
+                              makhdomdetailsprovider.recievedMakhdom!
+                                  .studentYear = int.parse(value) ?? 0;
                               // _makhdomData['studentYear'] = value ?? '';
                             }),
                         InputFieldWidget(

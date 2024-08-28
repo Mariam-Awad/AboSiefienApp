@@ -1,12 +1,13 @@
-import 'package:abosiefienapp/presentation/screens/my_makhdoms/my_makhdoms_provider.dart';
-import 'package:abosiefienapp/utils/app_assets_util.dart';
-import 'package:abosiefienapp/utils/app_debug_prints.dart';
-import 'package:abosiefienapp/utils/app_routes.dart';
-import 'package:abosiefienapp/utils/app_styles_util.dart';
+import 'package:abosiefienapp/Providers/my_makhdoms_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+
+import '../../core/app_assets/app_assets_util.dart';
+import '../../core/route/app_routes.dart';
+import '../../core/theming/app_styles_util.dart';
+import '../../core/utils/app_debug_prints.dart';
 import '../../model/mymakhdoms_model.dart';
 
 // ignore: must_be_immutable
@@ -60,12 +61,12 @@ class MakdomList extends StatelessWidget {
                               backgroundColor: const Color(0xFFE3F2FD),
                               child: makhdom.genderId == 1
                                   ? Image.asset(
-                                      AppAssetsUtil.maleAvatar,
+                                      AppAssets.maleAvatar,
                                       width: 50.0,
                                       height: 50.0,
                                     )
                                   : Image.asset(
-                                      AppAssetsUtil.femaleAvatar,
+                                      AppAssets.femaleAvatar,
                                       width: 50.0,
                                       height: 50.0,
                                     ),

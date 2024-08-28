@@ -1,16 +1,15 @@
-import 'package:abosiefienapp/model/default_model.dart';
-import 'package:abosiefienapp/presentation/screens/add_makhdom/add_makhdom_provider.dart';
+import 'package:abosiefienapp/Providers/add_makhdom_provider.dart';
+import 'package:abosiefienapp/core/utils/validator.dart';
 import 'package:abosiefienapp/presentation/widgets/app_date_picker_widget.dart';
 import 'package:abosiefienapp/presentation/widgets/custom_dropdown_widget.dart';
 import 'package:abosiefienapp/presentation/widgets/gender.dart';
 import 'package:abosiefienapp/presentation/widgets/input_form_fields.dart';
-import 'package:abosiefienapp/utils/app_debug_prints.dart';
-import 'package:abosiefienapp/utils/app_styles_util.dart';
-import 'package:abosiefienapp/utils/validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:intl/intl.dart' as intl;
+
+import '../../../core/theming/app_styles_util.dart';
+import '../../../core/utils/app_debug_prints.dart';
 
 class AddMakhdomScreen extends StatefulWidget {
   const AddMakhdomScreen({super.key});

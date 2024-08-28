@@ -1,15 +1,16 @@
-import 'package:abosiefienapp/presentation/screens/add_attendance/add_attendance_provider.dart';
+import 'package:abosiefienapp/Providers/add_attendance_provider.dart';
+import 'package:abosiefienapp/core/utils/validator.dart';
 import 'package:abosiefienapp/presentation/widgets/app_date_picker_widget.dart';
 import 'package:abosiefienapp/presentation/widgets/input_form_fields.dart';
 import 'package:abosiefienapp/presentation/widgets/local_attendance_makhdom_widget.dart';
-import 'package:abosiefienapp/utils/app_debug_prints.dart';
-import 'package:abosiefienapp/utils/app_routes.dart';
-import 'package:abosiefienapp/utils/app_styles_util.dart';
-import 'package:abosiefienapp/utils/validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
 import 'package:intl/intl.dart' as intl;
+import 'package:provider/provider.dart';
+
+import '../../../core/route/app_routes.dart';
+import '../../../core/theming/app_styles_util.dart';
+import '../../../core/utils/app_debug_prints.dart';
 
 // SEGIL AL MAKHDOMEN
 class AddAttendanceScreen extends StatefulWidget {
@@ -67,10 +68,18 @@ class _AddAttendanceScreenState extends State<AddAttendanceScreen> {
           ),
           appBar: AppBar(
             title: Text(
-              "إضافة حضور",
+              'إضافة حضور',
               style: AppStylesUtil.textRegularStyle(
                   20.0, Colors.black, FontWeight.w500),
             ),
+            actions: [
+              IconButton(
+                  onPressed: () {
+                    Navigator.pushNamed(
+                        context, AppRoutes.checkBoxAddAttendanceScreen);
+                  },
+                  icon: const Icon(Icons.checklist))
+            ],
           ),
           body: Padding(
             padding: EdgeInsets.symmetric(vertical: 0.h, horizontal: 0.w),

@@ -1,11 +1,25 @@
-import 'package:abosiefienapp/base/base-repo.dart';
 import 'package:abosiefienapp/model/khadem_model.dart';
-import 'package:abosiefienapp/network/end_points.dart';
-import 'package:abosiefienapp/utils/app_debug_prints.dart';
+import 'package:dartz/dartz.dart';
 
-class KhademRepo extends BaseRepo {
-  Future<KhademModel?> requestGetKhadem() {
-    printWarning('Iam In Khadem Repo');
-    return networkManager.get<KhademModel>(Endpoints.REQUEST_GET_KHADEM);
+import '../core/app_repository/repo.dart';
+import '../core/errors/exceptions.dart';
+import '../core/errors/failures.dart';
+import '../core/network/api_endpoints.dart';
+import '../core/utils/app_debug_prints.dart';
+
+class KhademRepo extends Repository {
+  Future<Either<Failure, KhademModel?>> requestGetKhadem() {
+    return exceptionHandler(
+      () async {
+        printWarning('Iam In Khadem Repo');
+        final Map<String, dynamic> response = await dioHelper.getData(
+          endPont: Endpoints.REQUEST_GET_KHADEM,
+        );
+        if (response['success'] == true) {
+          return KhademModel.fromJson(response['data']);
+        }
+        throw ServerException(exceptionMessage: response['msg']);
+      },
+    );
   }
 }

@@ -1,6 +1,7 @@
-import 'package:abosiefienapp/utils/app_styles_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../core/theming/app_styles_util.dart';
 
 class LocalAttendanceMakhdomWidget extends StatelessWidget {
   final int makhdomCode;

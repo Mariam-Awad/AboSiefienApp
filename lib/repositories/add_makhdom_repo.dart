@@ -1,13 +1,24 @@
-import 'package:abosiefienapp/base/base-repo.dart';
-import 'package:abosiefienapp/network/end_points.dart';
-import 'package:abosiefienapp/utils/app_debug_prints.dart';
+import 'package:abosiefienapp/core/errors/failures.dart';
+import 'package:dartz/dartz.dart';
 
-class AddMakhdomRepo extends BaseRepo {
+import '../core/app_repository/repo.dart';
+import '../core/errors/exceptions.dart';
+import '../core/network/api_endpoints.dart';
+import '../core/utils/app_debug_prints.dart';
 
-  Future<dynamic> requestAddMakhdom(Map<String, dynamic>? body) {
-    printWarning('Iam In HistoryOfMakhdoms Repo');
-    return networkManager
-        .post<dynamic>(Endpoints.REQUEST_ADD_MAKHDOM, body: body!); 
+class AddMakhdomRepo extends Repository {
+  Future<Either<Failure, dynamic>> requestAddMakhdom(
+      Map<String, dynamic>? body) {
+    return exceptionHandler(
+      () async {
+        printWarning('Iam In History Of Makhdoms Repo');
+        final Map<String, dynamic> response =
+            await dioHelper.postData(Endpoints.REQUEST_ADD_MAKHDOM, body);
+        if (response['success'] == true) {
+          return response['data'];
+        }
+        throw ServerException(exceptionMessage: response['msg']);
+      },
+    );
   }
-
 }

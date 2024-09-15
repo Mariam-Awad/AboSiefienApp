@@ -19,12 +19,13 @@ class AddAttendanceProvider extends ChangeNotifier {
   final GlobalKey<FormState> attendanceformKey = GlobalKey();
   TextEditingController pointsController = TextEditingController();
   TextEditingController codeController = TextEditingController();
-  String attendanceDate = '';
 
   List localAttendanceMakhdoms = [];
 
   String get localAttendanceMakhdomsEncode =>
       jsonEncode(localAttendanceMakhdoms);
+
+  String attendanceDate = '';
 
   validate(BuildContext context) {
     if (attendanceformKey.currentState!.validate() && attendanceDate != '') {
@@ -82,7 +83,6 @@ class AddAttendanceProvider extends ChangeNotifier {
 
   Future<bool> addAttendance(BuildContext context) async {
     convertToDate();
-
     customFunctions.showProgress(context);
     Either<Failure, dynamic> response =
         await addClassAttendanceRepo.requestAddAttendance({

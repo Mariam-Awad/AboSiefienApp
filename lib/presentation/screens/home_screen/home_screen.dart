@@ -49,13 +49,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 IconButton(
                     icon: const Icon(Icons.logout),
                     onPressed: () async {
-                      AppSharedPreferences.remove(
-                          SharedPreferencesKeys.accessToken);
+                      AppSharedPreferences.clear();
                       context.pushNamedAndRemoveUntil(
                           AppRoutes.loginScreenRouteName,
                           predicate: (route) => false);
-                      SystemChannels.platform
-                          .invokeMethod('SystemNavigator.pop');
+                      // SystemChannels.platform
+                      //     .invokeMethod('SystemNavigator.pop');
                     })
               ],
               // leading: Text("data"),

@@ -7,4 +7,5 @@ class Endpoints {
   static const REQUEST_ADD_MAKHDOM = "makhdom";
   static const REQUEST_GET_KHADEM = "khadem";
   static const REQUEST_ADD_ATTENDANCE = "attendance";
+  static const allNames = 'makhdom/getallnames';
 }

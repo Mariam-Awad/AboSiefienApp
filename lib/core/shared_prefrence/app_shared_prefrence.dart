@@ -9,6 +9,7 @@ class SharedPreferencesKeys {
       'localattendancemakhdomlist';
 
   static const String userModel = 'userData';
+  static const String stateCheckBox = 'stateCheckBox';
 }
 
 class AppSharedPreferences {

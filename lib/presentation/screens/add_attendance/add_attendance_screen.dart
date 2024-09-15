@@ -39,11 +39,15 @@ class _AddAttendanceScreenState extends State<AddAttendanceScreen> {
   @override
   Widget build(BuildContext context) {
     return Consumer<AddAttendanceProvider>(
-        builder: (context, addattendanceprovider, child) {
+        builder: (context, AddAttendanceProvider provider, child) {
       return Scaffold(
           bottomNavigationBar: Padding(
             padding: EdgeInsets.only(
-                left: 16.w, right: 16.w, bottom: 16.0, top: 0.0),
+              left: 16.w,
+              right: 16.w,
+              bottom: 16.0,
+              top: 0.0,
+            ),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue,
@@ -60,8 +64,8 @@ class _AddAttendanceScreenState extends State<AddAttendanceScreen> {
                   style: AppStylesUtil.textRegularStyle(
                       18.sp, Colors.white, FontWeight.w500)),
               onPressed: () {
-                addattendanceprovider.addAttendance(context).then((value) => {
-                      if (value == true) {addattendanceprovider.removeAllList()}
+                provider.addAttendance(context).then((value) => {
+                      if (value == true) {provider.removeAllList()}
                     });
               },
             ),
@@ -86,7 +90,7 @@ class _AddAttendanceScreenState extends State<AddAttendanceScreen> {
             child: Column(
               children: [
                 Form(
-                  key: addattendanceprovider.attendanceformKey,
+                  key: provider.attendanceformKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -97,25 +101,24 @@ class _AddAttendanceScreenState extends State<AddAttendanceScreen> {
                             labeltext: 'النقاط',
                             width: 136.w,
                             height: 40,
-                            controller: addattendanceprovider.pointsController,
+                            controller: provider.pointsController,
                             keyboardType: TextInputType.number,
                             lines: 1,
                             obscure: false,
                             textAlign: TextAlign.start,
                             onChanged: (value) {
-                              addattendanceprovider.pointsController.text =
-                                  value ?? '';
+                              provider.pointsController.text = value ?? '';
                             },
                           ),
                           InkWell(
                             onTap: () async {
                               DateTime? selected =
                                   await customShowDatePicker(context);
-                              addattendanceprovider.setSelectedAttendanceDate(
+                              provider.setSelectedAttendanceDate(
                                   intl.DateFormat('yyyy-MM-dd')
                                       .format(selected!));
                               printDone(
-                                  'Attendance DATE Updated ${addattendanceprovider.attendanceDate}');
+                                  'Attendance DATE Updated ${provider.attendanceDate}');
                             },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -127,9 +130,9 @@ class _AddAttendanceScreenState extends State<AddAttendanceScreen> {
                                 ),
                                 10.horizontalSpace,
                                 Text(
-                                  addattendanceprovider.attendanceDate == ''
+                                  provider.attendanceDate == ''
                                       ? 'تاريخ الإضافة'
-                                      : addattendanceprovider.attendanceDate,
+                                      : provider.attendanceDate,
                                   style: AppStylesUtil.textRegularStyle(
                                     17.sp,
                                     Colors.black,
@@ -160,23 +163,22 @@ class _AddAttendanceScreenState extends State<AddAttendanceScreen> {
                                 style: AppStylesUtil.textRegularStyle(
                                     18.sp, Colors.white, FontWeight.w500)),
                             onPressed: () {
-                              addattendanceprovider.validate(context);
+                              provider.validate(context);
                             },
                           ),
                           InputFieldWidget(
                             labeltext: 'كود المخدوم',
                             width: 136.w,
                             height: 40,
-                            controller: addattendanceprovider.codeController,
+                            controller: provider.codeController,
                             keyboardType: TextInputType.number,
-                            validation:
-                                addattendanceprovider.codeController.isEmpty(),
+                            validation: provider.codeController.isEmpty(),
                             validationText: 'يجب كتابة كود المخدوم',
                             lines: 1,
                             obscure: false,
                             textAlign: TextAlign.start,
                             onChanged: (value) {
-                              addattendanceprovider.codeController.text = value;
+                              provider.codeController.text = value;
                             },
                           ),
                         ],
@@ -189,8 +191,7 @@ class _AddAttendanceScreenState extends State<AddAttendanceScreen> {
                     padding:
                         EdgeInsets.symmetric(vertical: 10.h, horizontal: 20.w),
                     child: GridView.builder(
-                      itemCount:
-                          addattendanceprovider.localAttendanceMakhdoms.length,
+                      itemCount: provider.localAttendanceMakhdoms.length,
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
@@ -201,12 +202,11 @@ class _AddAttendanceScreenState extends State<AddAttendanceScreen> {
                         return Padding(
                           padding: EdgeInsets.symmetric(horizontal: 0.w),
                           child: LocalAttendanceMakhdomWidget(
-                            makhdomCode: addattendanceprovider
-                                .localAttendanceMakhdoms[index],
+                            makhdomCode:
+                                provider.localAttendanceMakhdoms[index],
                             removePress: () {
-                              addattendanceprovider.removeMakhdom(
-                                  addattendanceprovider
-                                      .localAttendanceMakhdoms[index]);
+                              provider.removeMakhdom(
+                                  provider.localAttendanceMakhdoms[index]);
                             },
                           ),
                         );

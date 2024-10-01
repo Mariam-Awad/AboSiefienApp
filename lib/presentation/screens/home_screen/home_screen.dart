@@ -73,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 Visibility(
                   visible:
-                      true, //homescreenprovider.hasManageMakhdomsPermission,
+                    homescreenprovider.hasManageMakhdomsPermission,
                   child: CardWidget(
                     "إدارة المخدومين",
                     () {

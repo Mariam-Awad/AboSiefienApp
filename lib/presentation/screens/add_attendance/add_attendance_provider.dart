@@ -1,8 +1,11 @@
 import 'package:abosiefienapp/cache/app_cache.dart';
 import 'package:abosiefienapp/repositories/add_class_attendance_repo.dart';
 import 'package:abosiefienapp/shared/custom_function.dart';
+import 'package:abosiefienapp/utils/app_colors_util.dart';
 import 'package:abosiefienapp/utils/app_debug_prints.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:intl/intl.dart' as intl;
 
 class AddAttendanceProvider extends ChangeNotifier {
@@ -17,6 +20,7 @@ class AddAttendanceProvider extends ChangeNotifier {
   String attendanceDate = '';
 
   List localAttendanceMakhdoms = [];
+  String scanResult = '';
 
   validate(BuildContext context) {
     if (attendanceformKey.currentState!.validate() && attendanceDate != '') {
@@ -102,5 +106,18 @@ class AddAttendanceProvider extends ChangeNotifier {
     customFunctions.hideProgress();
     notifyListeners();
     return false;
+  }
+
+  Future<void> scanCode() async {
+    String barCodeScanRes;
+    try{
+      barCodeScanRes = await FlutterBarcodeScanner.scanBarcode("#ff6666", 'Cancle', true, ScanMode.QR);
+    } on PlatformException{
+      barCodeScanRes = 'حدث خطأ ما برجاء المحاولة مرة اخري';
+    }
+    scanResult = barCodeScanRes;
+    codeController.text = barCodeScanRes;
+    printDone('scanResult $scanResult');
+    notifyListeners();
   }
 }

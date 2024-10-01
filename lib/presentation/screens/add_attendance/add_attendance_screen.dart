@@ -147,11 +147,11 @@ class _AddAttendanceScreenState extends State<AddAttendanceScreen> {
                                 ),
                               ),
                             ),
-                            child: Text('إضافة',
+                            child: Text('إسكان',
                                 style: AppStylesUtil.textRegularStyle(
                                     18.sp, Colors.white, FontWeight.w500)),
                             onPressed: () {
-                              addattendanceprovider.validate(context);
+                              addattendanceprovider.scanCode();
                             },
                           ),
                           InputFieldWidget(
@@ -172,6 +172,25 @@ class _AddAttendanceScreenState extends State<AddAttendanceScreen> {
                           ),
                         ],
                       ),
+                      ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blue,
+                              fixedSize: Size(126.w, 30.h),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20.0, vertical: 8.0),
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(12.0),
+                                ),
+                              ),
+                            ),
+                            child: Text('إضافة',
+                                style: AppStylesUtil.textRegularStyle(
+                                    18.sp, Colors.white, FontWeight.w500)),
+                            onPressed: () {
+                              addattendanceprovider.validate(context);
+                            },
+                          ),
                     ],
                   ),
                 ),

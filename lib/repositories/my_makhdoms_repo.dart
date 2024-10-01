@@ -24,7 +24,7 @@ class MyMakhdomsRepo extends Repository {
           "absentDate": formattedDate,
         });
         if (response['success'] == true) {
-          return MyMakhdomsModel.fromJson(response['data']);
+          return MyMakhdomsModel.fromJson(response);
         }
         throw ServerException(exceptionMessage: response['msg']);
       },

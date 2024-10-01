@@ -16,7 +16,7 @@ class KhademRepo extends Repository {
           endPont: Endpoints.REQUEST_GET_KHADEM,
         );
         if (response['success'] == true) {
-          return KhademModel.fromJson(response['data']);
+          return KhademModel.fromJson(response);
         }
         throw ServerException(exceptionMessage: response['msg']);
       },

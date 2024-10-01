@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
                 primaryColor: Colors.purple,
                 visualDensity: VisualDensity.adaptivePlatformDensity,
               ),
-              home: MyHomePage(title: ''),
+              home: const MyHomePage(title: ''),
             );
           },
         );
@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
+  const MyHomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 

@@ -149,6 +149,26 @@ class AddAttendanceScreen extends StatelessWidget {
                                   BorderRadius.all(Radius.circular(12.0)),
                             ),
                           ),
+                          child: Text('Scan',
+                              style: AppStylesUtil.textRegularStyle(
+                                  18.sp, Colors.white, FontWeight.w500)),
+                          onPressed: () {
+                            provider.scanCode();
+                          },
+                        ),
+                      ],
+                    ),
+                    ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blue,
+                            fixedSize: Size(126.w, 30.h),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20.0, vertical: 8.0),
+                            shape: const RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(12.0)),
+                            ),
+                          ),
                           child: Text('Add',
                               style: AppStylesUtil.textRegularStyle(
                                   18.sp, Colors.white, FontWeight.w500)),
@@ -161,8 +181,6 @@ class AddAttendanceScreen extends StatelessWidget {
                             provider.validate(context);
                           },
                         ),
-                      ],
-                    )
                   ],
                 ),
               ),

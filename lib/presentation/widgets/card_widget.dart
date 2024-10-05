@@ -1,5 +1,6 @@
-import 'package:abosiefienapp/utils/app_styles_util.dart';
 import 'package:flutter/material.dart';
+
+import '../../core/theming/app_styles_util.dart';
 
 class CardWidget extends StatelessWidget {
   final String screenTitle;

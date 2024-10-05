@@ -1,13 +1,13 @@
-import 'package:abosiefienapp/presentation/screens/home_screen/home_screen_provider.dart';
-import 'package:abosiefienapp/presentation/screens/my_makhdoms/my_makhdoms_provider.dart';
+import 'package:abosiefienapp/Providers/my_makhdoms_provider.dart';
 import 'package:abosiefienapp/presentation/widgets/mkhdom_list.dart';
 import 'package:abosiefienapp/presentation/widgets/search_section_widget.dart';
-import 'package:abosiefienapp/utils/app_debug_prints.dart';
-import 'package:abosiefienapp/utils/app_styles_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../../core/theming/app_styles_util.dart';
+import '../../../core/utils/app_debug_prints.dart';
 
 // SEGIL AL MAKHDOMEN
 class MyMakhdomsScreen extends StatefulWidget {
@@ -42,7 +42,7 @@ class _MyMakhdomsScreenState extends State<MyMakhdomsScreen> {
   @override
   Widget build(BuildContext context) {
     return Consumer<MyMakhdomsProvider>(
-        builder: (context, mymakhdomsprovider, child) {
+        builder: (context, MyMakhdomsProvider mymakhdomsprovider, child) {
       return Scaffold(
           bottomNavigationBar: Card(
             elevation: 10,

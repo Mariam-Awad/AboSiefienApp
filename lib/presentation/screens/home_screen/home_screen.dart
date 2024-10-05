@@ -1,11 +1,13 @@
-import 'package:abosiefienapp/cache/app_cache.dart';
-import 'package:abosiefienapp/presentation/screens/home_screen/home_screen_provider.dart';
+import 'package:abosiefienapp/Providers/home_screen_provider.dart';
+import 'package:abosiefienapp/core/extension_method/extension_navigation.dart';
 import 'package:abosiefienapp/presentation/widgets/card_widget.dart';
-import 'package:abosiefienapp/utils/app_routes.dart';
-import 'package:abosiefienapp/utils/app_styles_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+
+import '../../../core/route/app_routes.dart';
+import '../../../core/shared_prefrence/app_shared_prefrence.dart';
+import '../../../core/theming/app_styles_util.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -19,7 +21,8 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      Provider.of<HomeScreenProvider>(context, listen: false).getStoredUser();
+      Provider.of<HomeScreenProvider>(context, listen: false)
+          .getStoredUser(context);
     });
   }
 
@@ -27,7 +30,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Consumer<HomeScreenProvider>(
       builder: (context, homescreenprovider, child) {
-        //printWarning(homescreenprovider.permisions);
         return WillPopScope(
           onWillPop: () async {
             SystemChannels.platform.invokeMethod('SystemNavigator.pop');
@@ -35,6 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
           },
           child: Scaffold(
             appBar: AppBar(
+              automaticallyImplyLeading: false,
               title: Text(
                 "برنامج المخدومين",
                 textDirection: TextDirection.rtl,
@@ -46,9 +49,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 IconButton(
                     icon: const Icon(Icons.logout),
                     onPressed: () async {
-                      AppCache.instance.removeToken();
-                      SystemChannels.platform
-                          .invokeMethod('SystemNavigator.pop');
+                      AppSharedPreferences.clear();
+                      context.pushNamedAndRemoveUntil(
+                          AppRoutes.loginScreenRouteName,
+                          predicate: (route) => false);
+                      // SystemChannels.platform
+                      //     .invokeMethod('SystemNavigator.pop');
                     })
               ],
               // leading: Text("data"),
@@ -77,8 +83,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: CardWidget(
                     "إدارة المخدومين",
                     () {
-                      Navigator.pushNamed(
-                          context, AppRoutes.manageOfMakhdomsRouteName);
+                      context.pushNamed(
+                        routeName: AppRoutes.manageOfMakhdomsRouteName,
+                      );
                     },
                     Icons.person_pin_sharp,
                   ),

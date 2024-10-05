@@ -1,19 +1,22 @@
-import 'package:abosiefienapp/presentation/screens/add_class_attendance/add_class_attendance_provider.dart';
+import 'package:abosiefienapp/Providers/add_class_attendance_provider.dart';
+import 'package:abosiefienapp/core/extension_method/extension_navigation.dart';
 import 'package:abosiefienapp/presentation/widgets/search_section_widget.dart';
-import 'package:abosiefienapp/utils/app_debug_prints.dart';
-import 'package:abosiefienapp/utils/app_routes.dart';
-import 'package:abosiefienapp/utils/app_styles_util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+
+import '../../../core/route/app_routes.dart';
+import '../../../core/theming/app_styles_util.dart';
+import '../../../core/utils/app_debug_prints.dart';
 
 // SEGIL AL MAKHDOMEN
 class AddClassAttendanceScreen extends StatefulWidget {
   const AddClassAttendanceScreen({super.key});
 
   @override
-  State<AddClassAttendanceScreen> createState() => _AddClassAttendanceScreenState();
+  State<AddClassAttendanceScreen> createState() =>
+      _AddClassAttendanceScreenState();
 }
 
 class _AddClassAttendanceScreenState extends State<AddClassAttendanceScreen> {
@@ -131,16 +134,20 @@ class _AddClassAttendanceScreenState extends State<AddClassAttendanceScreen> {
                             ),
                           ),
                         ),
-                        child: Text('حــفظ',
-                            style: AppStylesUtil.textRegularStyle(
-                                20, Colors.white, FontWeight.bold)),
+                        child: Text(
+                          'حــفظ',
+                          style: AppStylesUtil.textRegularStyle(
+                              20, Colors.white, FontWeight.bold),
+                        ),
                         onPressed: () {
                           addclassattendanceprovider
                               .addAttendance(context)
-                              .then((value) => {
-                                    Navigator.pushReplacementNamed(context,
-                                        AppRoutes.addClassAttendanceRouteName)
-                                  });
+                              .then(
+                                (value) => {
+                                  context.pushReplacementNamed(
+                                      AppRoutes.addClassAttendanceRouteName),
+                                },
+                              );
                         },
                       ),
                     ],

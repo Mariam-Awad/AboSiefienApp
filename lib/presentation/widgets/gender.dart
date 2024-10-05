@@ -1,10 +1,11 @@
 // ignore_for_file: prefer_if_null_operators
 
 import 'package:abosiefienapp/model/radio_button_model.dart';
-import 'package:abosiefienapp/utils/app_debug_prints.dart';
-import 'package:abosiefienapp/utils/app_styles_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../core/theming/app_styles_util.dart';
+import '../../core/utils/app_debug_prints.dart';
 
 class GenderSelect extends StatefulWidget {
   RadioButtonModel radioValue;

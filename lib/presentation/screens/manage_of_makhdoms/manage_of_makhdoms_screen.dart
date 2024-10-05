@@ -1,9 +1,10 @@
-import 'package:abosiefienapp/presentation/screens/home_screen/home_screen_provider.dart';
+import 'package:abosiefienapp/Providers/home_screen_provider.dart';
 import 'package:abosiefienapp/presentation/widgets/card_widget.dart';
-import 'package:abosiefienapp/utils/app_routes.dart';
-import 'package:abosiefienapp/utils/app_styles_util.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../../core/route/app_routes.dart';
+import '../../../core/theming/app_styles_util.dart';
 
 class ManageOfMakhdoms extends StatelessWidget {
   const ManageOfMakhdoms({super.key});

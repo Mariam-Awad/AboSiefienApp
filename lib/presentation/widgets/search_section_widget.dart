@@ -1,9 +1,10 @@
-import 'package:abosiefienapp/presentation/screens/add_class_attendance/add_class_attendance_provider.dart';
-import 'package:abosiefienapp/presentation/screens/my_makhdoms/my_makhdoms_provider.dart';
+import 'package:abosiefienapp/Providers/add_class_attendance_provider.dart';
+import 'package:abosiefienapp/Providers/my_makhdoms_provider.dart';
 import 'package:abosiefienapp/presentation/widgets/filter_bottom_sheet_widget.dart';
-import 'package:abosiefienapp/utils/app_styles_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../core/theming/app_styles_util.dart';
 
 class SearchSectionWidget extends StatelessWidget {
   final MyMakhdomsProvider? provider;
@@ -41,13 +42,14 @@ class SearchSectionWidget extends StatelessWidget {
                 child: InkWell(
                   onTap: () {
                     showModalBottomSheet(
-                        context: context,
-                        isScrollControlled: true,
-                        backgroundColor: Colors.white,
-                        shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.vertical(
-                                top: Radius.circular(30.0))),
-                        builder: (context) => const FilterBottomSheetWidget());
+                      context: context,
+                      isScrollControlled: true,
+                      backgroundColor: Colors.white,
+                      shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(30.0))),
+                      builder: (context) => const FilterBottomSheetWidget(),
+                    );
                   },
                   child: const Icon(
                     Icons.sort,

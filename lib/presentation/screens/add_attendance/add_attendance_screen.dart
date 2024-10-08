@@ -7,6 +7,7 @@ import 'package:intl/intl.dart' as intl;
 import 'package:provider/provider.dart';
 
 import '../../../core/theming/app_styles_util.dart';
+import '../../../core/utils/custom_function.dart';
 
 class AddAttendanceScreen extends StatelessWidget {
   const AddAttendanceScreen({super.key});
@@ -39,13 +40,20 @@ class AddAttendanceScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                child: Text('Send Attendance',
+                child: Text('إرسال الحضور',
                     style: AppStylesUtil.textRegularStyle(
                         18.sp, Colors.white, FontWeight.w500)),
                 onPressed: () async {
-                  bool success = await provider.addAttendance(context);
-                  if (success) {
-                    provider.removeAllList(); // Clear cache on success
+                  if (provider.localAttendanceMakhdoms.length != 0) {
+                    bool success = await provider.addAttendance(context);
+                    if (success) {
+                      provider.removeAllList(); // Clear cache on success
+                    }
+                  } else {
+                    CustomFunctions().showError(
+                        message:
+                            'برجاء لضلفة اسم الذي تريد اخذ الحضور له من خلال البحث بي id الخاص بي المخدوم ',
+                        context: context);
                   }
                 },
               ),
@@ -56,7 +64,7 @@ class AddAttendanceScreen extends StatelessWidget {
           title: Row(
             children: [
               Text(
-                'Add Attendance',
+                'إضافة الحضور',
                 style: AppStylesUtil.textRegularStyle(
                     20.0, Colors.black, FontWeight.w500),
               ),
@@ -88,7 +96,7 @@ class AddAttendanceScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         InputFieldWidget(
-                          labeltext: 'Points',
+                          labeltext: 'نقاط',
                           width: 136.w,
                           height: 40,
                           controller: provider.pointsController,
@@ -115,7 +123,7 @@ class AddAttendanceScreen extends StatelessWidget {
                               10.horizontalSpace,
                               Text(
                                 provider.attendanceDate == ''
-                                    ? 'Select Date'
+                                    ? 'اختيار التاريخ'
                                     : provider.attendanceDate,
                                 style: AppStylesUtil.textRegularStyle(
                                     17.sp, Colors.black, FontWeight.w500),
@@ -149,7 +157,7 @@ class AddAttendanceScreen extends StatelessWidget {
                                   BorderRadius.all(Radius.circular(12.0)),
                             ),
                           ),
-                          child: Text('Scan',
+                          child: Text('مسح',
                               style: AppStylesUtil.textRegularStyle(
                                   18.sp, Colors.white, FontWeight.w500)),
                           onPressed: () {
@@ -159,28 +167,26 @@ class AddAttendanceScreen extends StatelessWidget {
                       ],
                     ),
                     ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blue,
-                            fixedSize: Size(126.w, 30.h),
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 20.0, vertical: 8.0),
-                            shape: const RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(12.0)),
-                            ),
-                          ),
-                          child: Text('Add',
-                              style: AppStylesUtil.textRegularStyle(
-                                  18.sp, Colors.white, FontWeight.w500)),
-                          onPressed: () async {
-                            int? code =
-                                int.tryParse(provider.codeController.text);
-                            if (code != null) {
-                              await provider.findNameById(code);
-                            }
-                            provider.validate(context);
-                          },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue,
+                        fixedSize: Size(126.w, 30.h),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20.0, vertical: 8.0),
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(12.0)),
                         ),
+                      ),
+                      child: Text('اضافة',
+                          style: AppStylesUtil.textRegularStyle(
+                              18.sp, Colors.white, FontWeight.w500)),
+                      onPressed: () async {
+                        int? code = int.parse(provider.codeController.text);
+                        if (code != null) {
+                          await provider.findNameById(code);
+                        }
+                        provider.validate(context);
+                      },
+                    ),
                   ],
                 ),
               ),

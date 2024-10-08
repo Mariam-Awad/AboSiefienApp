@@ -37,8 +37,8 @@ class _AddClassAttendanceScreenState extends State<AddClassAttendanceScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AddClassAttendanceProvider>(
-        builder: (context, addclassattendanceprovider, child) {
+    return Consumer<AddClassAttendanceProvider>(builder: (BuildContext context,
+        AddClassAttendanceProvider addclassattendanceprovider, Widget? child) {
       return Scaffold(
           bottomNavigationBar: Card(
             elevation: 10,

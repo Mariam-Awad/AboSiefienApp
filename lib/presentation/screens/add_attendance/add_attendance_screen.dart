@@ -52,7 +52,7 @@ class AddAttendanceScreen extends StatelessWidget {
                   } else {
                     CustomFunctions().showError(
                         message:
-                            'برجاء لضلفة اسم الذي تريد اخذ الحضور له من خلال البحث بي id الخاص بي المخدوم ',
+                            'برجاء اضافة اسم الذي تريد اخذ الحضور له من خلال البحث بي id الخاص بي المخدوم ',
                         context: context);
                   }
                 },
@@ -71,7 +71,7 @@ class AddAttendanceScreen extends StatelessWidget {
               const Spacer(),
               provider.isLoading
                   ? const CircularProgressIndicator(color: Colors.blue)
-                  : Text("${provider.names.length}")
+                  : Text("${provider.storedDataCount}")
             ],
           ),
           actions: [
@@ -180,7 +180,7 @@ class AddAttendanceScreen extends StatelessWidget {
                           style: AppStylesUtil.textRegularStyle(
                               18.sp, Colors.white, FontWeight.w500)),
                       onPressed: () async {
-                        int? code = int.parse(provider.codeController.text);
+                        int? code = int.tryParse(provider.codeController.text);
                         if (code != null) {
                           await provider.findNameById(code);
                         }

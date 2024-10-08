@@ -47,13 +47,15 @@ class AddAttendanceProvider extends ChangeNotifier {
 
   // Initialize and load data from SharedPreferences
   AddAttendanceProvider() {
-    loadMakhdomsFromCache(); // Load previously searched data from cache
-    loadNamesFromSharedPreferences(); // Load saved names from SharedPreferences
+    loadMakhdomsFromCache(); // Load cached data
+    loadNamesFromSharedPreferences(); // Load saved names
+    updateStoredDataCount(); // Update the stored data count
   }
+
   Future<void> saveNamesToSharedPreferences() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setStringList('savedNames', _names);
-    print('Names saved to SharedPreferences: $_names');
+    print('Names saved to SharedPreferences: ${_names.length}');
   }
 
   Future<void> loadNamesFromSharedPreferences() async {
@@ -199,7 +201,7 @@ class AddAttendanceProvider extends ChangeNotifier {
 
           // Store data without updating the UI
           List<String> existingNames = [];
-          for (var item in r) {
+          for (Map<String, dynamic> item in r) {
             if (item['name'] != null && item['id'] != null) {
               existingNames.add(item['name'] as String);
             }
@@ -217,6 +219,29 @@ class AddAttendanceProvider extends ChangeNotifier {
         }
       },
     );
+  }
+
+  Future<int> getStoredDataCount() async {
+    // Initialize the database
+    Database db = await initializeDB();
+
+    // Fetch all data from the SQLite 'Data' table
+    final List<Map<String, dynamic>> maps = await db.query('Data');
+
+    // Convert the data to a list of strings (for example, names)
+    List<String> storedNames =
+        maps.map((data) => data['name'] as String).toList();
+
+    // Return the length of the list, which represents the number of stored entries
+    return storedNames.length;
+    notifyListeners();
+  }
+
+  int storedDataCount = 0;
+
+  Future<void> updateStoredDataCount() async {
+    storedDataCount = await getStoredDataCount();
+    notifyListeners(); // Notify UI about the change
   }
 
   Future<void> retrieveJsonData() async {
@@ -308,28 +333,15 @@ class AddAttendanceProvider extends ChangeNotifier {
     isLoadingAddAttendance = true;
     notifyListeners();
 
-    // Get IDs from localAttendanceMakhdoms
-    List<String> makhdomsIds =
-        localAttendanceMakhdoms.map((m) => m.id.toString()).toList();
-
-    // Extract points from the pointsController
-    String points = pointsController.text.trim(); // Trim any unnecessary spaces
-
-    // Check if points are provided
-    if (points.isEmpty) {
-      customFunctions.showError(
-          message: 'Please provide points', context: context);
-      customFunctions.hideProgress();
-      isLoading = false;
-      notifyListeners();
-      return false;
-    }
+    List<String> makhdomsIds = localAttendanceMakhdoms
+        .map((AllNamesModel m) => m.id.toString())
+        .toList();
 
     Either<Failure, dynamic> response =
         await addClassAttendanceRepo.requestAddAttendance({
       "attendanceDate": attendanceDate,
       "makhdomsId": makhdomsIds,
-      "points": points, // Added points similar to how makhdomsId is handled
+      "points": pointsController.text,
     });
 
     bool result = response.fold(
@@ -340,7 +352,7 @@ class AddAttendanceProvider extends ChangeNotifier {
       },
       (dynamic r) {
         customFunctions.showSuccess(
-            message: 'Attendance added successfully', context: context);
+            message: 'تمت إضافة الحضور بنجاح', context: context);
         return true;
       },
     );

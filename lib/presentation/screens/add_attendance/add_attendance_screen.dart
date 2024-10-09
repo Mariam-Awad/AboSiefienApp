@@ -136,16 +136,6 @@ class AddAttendanceScreen extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        InputFieldWidget(
-                          labeltext: 'ID',
-                          width: 136.w,
-                          height: 40,
-                          controller: provider.codeController,
-                          keyboardType: TextInputType.number,
-                          lines: 1,
-                          obscure: false,
-                          textAlign: TextAlign.start,
-                        ),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.blue,
@@ -157,35 +147,34 @@ class AddAttendanceScreen extends StatelessWidget {
                                   BorderRadius.all(Radius.circular(12.0)),
                             ),
                           ),
-                          child: Text('مسح',
+                          child: Text('اضافة',
                               style: AppStylesUtil.textRegularStyle(
                                   18.sp, Colors.white, FontWeight.w500)),
-                          onPressed: () {
-                            provider.scanCode();
+                          onPressed: () async {
+                            int? code =
+                                int.tryParse(provider.codeController.text);
+                            if (code != null) {
+                              await provider.findNameById(code);
+                            }
+                            provider.validate(context);
                           },
                         ),
-                      ],
-                    ),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue,
-                        fixedSize: Size(126.w, 30.h),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20.0, vertical: 8.0),
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                        InputFieldWidget(
+                          labeltext: 'كود المخدوم',
+                          width: 200.w,
+                          height: 40,
+                          controller: provider.codeController,
+                          keyboardType: TextInputType.number,
+                          lines: 1,
+                          obscure: false,
+                          textAlign: TextAlign.start,
+                          prefix: IconButton(
+                              onPressed: () {
+                                provider.scanCode();
+                              },
+                              icon: const Icon(Icons.qr_code)),
                         ),
-                      ),
-                      child: Text('اضافة',
-                          style: AppStylesUtil.textRegularStyle(
-                              18.sp, Colors.white, FontWeight.w500)),
-                      onPressed: () async {
-                        int? code = int.tryParse(provider.codeController.text);
-                        if (code != null) {
-                          await provider.findNameById(code);
-                        }
-                        provider.validate(context);
-                      },
+                      ],
                     ),
                   ],
                 ),

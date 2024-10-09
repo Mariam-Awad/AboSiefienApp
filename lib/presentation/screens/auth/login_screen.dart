@@ -20,7 +20,8 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      Provider.of<LoginProvider>(context, listen: false).getAPKVersion();
+      final myProvider = Provider.of<LoginProvider>(context, listen: false);
+      myProvider.getAPKVersion();
     });
     super.initState();
   }

@@ -8,8 +8,8 @@ Future<DateTime?> customShowDatePicker(BuildContext context) async =>
     await showDatePickerDialog(
       context: context,
       initialDate: DateTime.now(),
-      minDate: DateTime(1980),
-      maxDate: DateTime(2030),
+      minDate: DateTime.now().subtract(const Duration(days: 1)),
+      maxDate: DateTime.now(),
       contentPadding: const EdgeInsets.all(6.0),
       padding: EdgeInsets.symmetric(horizontal: 40.w, vertical: 120.h),
       daysNameTextStyle:

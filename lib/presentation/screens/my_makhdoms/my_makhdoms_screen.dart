@@ -26,7 +26,6 @@ class _MyMakhdomsScreenState extends State<MyMakhdomsScreen> {
 
   @override
   void initState() {
-    // CALL MAKHDOMS LIST
     callMyMakhdomsApi();
     super.initState();
   }

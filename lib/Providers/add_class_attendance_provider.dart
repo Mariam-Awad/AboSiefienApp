@@ -59,10 +59,6 @@ class AddClassAttendanceProvider extends ChangeNotifier {
         return true;
       },
     );
-
-    customFunctions.hideProgress();
-    customFunctions.showError(
-        message: 'حدث خطأ ما برجاء المحاولة مرة اّخرى', context: context);
     notifyListeners();
     return false;
   }

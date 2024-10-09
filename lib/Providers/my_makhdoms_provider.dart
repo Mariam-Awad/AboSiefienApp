@@ -36,8 +36,7 @@ class MyMakhdomsProvider extends ChangeNotifier {
 
   void clearFilterDate() {
     absentDate = '';
-    //sortCoulmn = 1;
-    //sortDirection = 1;
+
     notifyListeners();
   }
 
@@ -79,10 +78,6 @@ class MyMakhdomsProvider extends ChangeNotifier {
         return true;
       },
     );
-
-    customFunctions.hideProgress();
-    customFunctions.showError(
-        message: 'حدث خطأ ما برجاء المحاولة مرة اّخرى', context: context);
     notifyListeners();
     return false;
   }

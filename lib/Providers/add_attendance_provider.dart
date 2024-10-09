@@ -40,7 +40,6 @@ class AddAttendanceProvider extends ChangeNotifier {
   List<String> get names => _names;
 
   List<AllNamesModel> _data = [];
-  List<AllNamesModel> get data => _data;
 
   String? foundName;
   int? foundId;
@@ -48,13 +47,15 @@ class AddAttendanceProvider extends ChangeNotifier {
 
   // Initialize and load data from SharedPreferences
   AddAttendanceProvider() {
-    loadMakhdomsFromCache(); // Load previously searched data from cache
-    loadNamesFromSharedPreferences(); // Load saved names from SharedPreferences
+    loadMakhdomsFromCache(); // Load cached data
+    loadNamesFromSharedPreferences(); // Load saved names
+    updateStoredDataCount(); // Update the stored data count
   }
+
   Future<void> saveNamesToSharedPreferences() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setStringList('savedNames', _names);
-    print('Names saved to SharedPreferences: $_names');
+    print('Names saved to SharedPreferences: ${_names.length}');
   }
 
   Future<void> loadNamesFromSharedPreferences() async {
@@ -83,16 +84,11 @@ class AddAttendanceProvider extends ChangeNotifier {
 
       AllNamesModel makhdom = AllNamesModel.fromJson(result[0]);
 
-      // Store found name and id in localAttendanceMakhdoms (for UI and server submission)
+      // Add to localAttendanceMakhdoms only after a successful search
       if (!localAttendanceMakhdoms.any((item) => item.id == foundId)) {
         localAttendanceMakhdoms.add(makhdom);
-
-        // Save to SQLite as well
-        await addMakhdom(makhdom.id, makhdom.name);
-
-        // Save the updated localAttendanceMakhdoms list to SharedPreferences cache
-        await saveMakhdomsToCache();
-        notifyListeners();
+        await saveMakhdomsToCache(); // Save the updated list to cache
+        notifyListeners(); // Update the UI with the found data
       }
     } else {
       foundName = null;
@@ -100,7 +96,7 @@ class AddAttendanceProvider extends ChangeNotifier {
       print('Name not found for id: $id');
     }
 
-    notifyListeners();
+    notifyListeners(); // Notify listeners to update the UI after search
   }
 
   Future<void> addMakhdom(int id, String name) async {
@@ -130,13 +126,9 @@ class AddAttendanceProvider extends ChangeNotifier {
 
   Future<void> saveMakhdomsToCache() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    // Convert the localAttendanceMakhdoms list to JSON and save it
     String jsonList =
         jsonEncode(localAttendanceMakhdoms.map((e) => e.toJson()).toList());
     await prefs.setString('attendanceMakhdoms', jsonList);
-
-    print('Searched data saved to cache: $jsonList');
   }
 
   Future<void> loadMakhdomsFromCache() async {
@@ -168,17 +160,20 @@ class AddAttendanceProvider extends ChangeNotifier {
 
   Future<void> insertJsonData(List<Map<String, dynamic>> data) async {
     Database db = await initializeDB();
+    Batch batch = db.batch(); // Use batch to reduce overhead
+
     for (var item in data) {
-      await db.insert(
+      batch.insert(
         'Data',
         {
           'id': item['id'], // Store 'id' as an integer
           'name': item['name']
         },
-        conflictAlgorithm: ConflictAlgorithm.replace,
+        conflictAlgorithm: ConflictAlgorithm.replace, // Avoid duplication
       );
     }
 
+    await batch.commit(); // Execute all inserts in a batch
     final List<Map<String, dynamic>> insertedData = await db.query('Data');
     print('Data inserted into SQLite: $insertedData');
   }
@@ -204,23 +199,16 @@ class AddAttendanceProvider extends ChangeNotifier {
         if (r.isNotEmpty) {
           await insertJsonData(r);
 
-          _names.clear(); // Clear previous names
-
-          List<String> existingNames = []; // Collect existing names
-
-          for (var item in r) {
+          // Store data without updating the UI
+          List<String> existingNames = [];
+          for (Map<String, dynamic> item in r) {
             if (item['name'] != null && item['id'] != null) {
               existingNames.add(item['name'] as String);
             }
           }
 
-          // Update _names only if there are new names
-          if (existingNames.length > _names.length) {
-            _names = existingNames.toList();
-            await saveNamesToSharedPreferences(); // Save the updated names to SharedPreferences
-          }
+          await saveNamesToSharedPreferences(); // Save names to cache
 
-          await retrieveJsonData();
           isLoading = false; // Stop loading
           notifyListeners();
         } else {
@@ -231,6 +219,29 @@ class AddAttendanceProvider extends ChangeNotifier {
         }
       },
     );
+  }
+
+  Future<int> getStoredDataCount() async {
+    // Initialize the database
+    Database db = await initializeDB();
+
+    // Fetch all data from the SQLite 'Data' table
+    final List<Map<String, dynamic>> maps = await db.query('Data');
+
+    // Convert the data to a list of strings (for example, names)
+    List<String> storedNames =
+        maps.map((data) => data['name'] as String).toList();
+
+    // Return the length of the list, which represents the number of stored entries
+    return storedNames.length;
+    notifyListeners();
+  }
+
+  int storedDataCount = 0;
+
+  Future<void> updateStoredDataCount() async {
+    storedDataCount = await getStoredDataCount();
+    notifyListeners(); // Notify UI about the change
   }
 
   Future<void> retrieveJsonData() async {
@@ -264,18 +275,18 @@ class AddAttendanceProvider extends ChangeNotifier {
       printWarning('Code Is: ${int.parse(codeController.text)}');
 
       if (foundId != null && foundName != null) {
-        // Pass foundId and foundName directly
-        addMakhdom(
-            foundId!, foundName!); // Found ID and Name passed as arguments
+        addMakhdom(foundId!, foundName!);
       } else {
         printError('Found ID or Name is null');
         customFunctions.showError(
-            message: 'برجاء إدخال البيانات المطلوبة', context: context);
+            message:
+                'الاسم الذي تبحث عنه غير موجودة قد يكون تم اضافته حديثا تاكد من اتصالك بي الانترنت ثم قم باعادة تحميل الاسماء من الانترنت',
+            context: context);
       }
     } else {
       printError('Not Validated');
       customFunctions.showError(
-          message: 'برجاء إدخال البيانات المطلوبة', context: context);
+          message: 'يرجى ملء الحقول المطلوبة', context: context);
     }
   }
 
@@ -322,25 +333,26 @@ class AddAttendanceProvider extends ChangeNotifier {
     isLoadingAddAttendance = true;
     notifyListeners();
 
-    // Get IDs from localAttendanceMakhdoms
-    List<String> makhdomsIds =
-        localAttendanceMakhdoms.map((m) => m.id.toString()).toList();
+    List<String> makhdomsIds = localAttendanceMakhdoms
+        .map((AllNamesModel m) => m.id.toString())
+        .toList();
 
     Either<Failure, dynamic> response =
         await addClassAttendanceRepo.requestAddAttendance({
       "attendanceDate": attendanceDate,
       "makhdomsId": makhdomsIds,
+      "points": pointsController.text,
     });
 
     bool result = response.fold(
       (Failure l) {
-        final error = l.message ?? 'حدث خطأ';
+        final error = l.message ?? 'An error occurred';
         customFunctions.showError(message: error, context: context);
         return false;
       },
       (dynamic r) {
         customFunctions.showSuccess(
-            message: 'تمت الإضافة بنجاح', context: context);
+            message: 'تمت إضافة الحضور بنجاح', context: context);
         return true;
       },
     );
@@ -351,13 +363,14 @@ class AddAttendanceProvider extends ChangeNotifier {
 
     return result;
   }
-  
+
   String scanResult = "";
   Future<void> scanCode() async {
     String barCodeScanRes;
-    try{
-      barCodeScanRes = await FlutterBarcodeScanner.scanBarcode("#ff6666", 'Cancle', true, ScanMode.QR);
-    } on PlatformException{
+    try {
+      barCodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+          "#ff6666", 'Cancel', true, ScanMode.QR);
+    } on PlatformException {
       barCodeScanRes = 'حدث خطأ ما برجاء المحاولة مرة اخري';
     }
     scanResult = barCodeScanRes;
